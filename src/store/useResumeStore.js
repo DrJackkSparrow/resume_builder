@@ -69,6 +69,10 @@ const initialResumeData = {
 export const useResumeStore = create((set) => ({
   data: initialResumeData,
   
+  setResumeData: (newData) => set({ data: newData }),
+  
+  resetResumeData: () => set({ data: initialResumeData }),
+  
   updateFormatting: (key, value) =>
     set((state) => ({
       data: {

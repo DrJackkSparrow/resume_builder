@@ -20,12 +20,28 @@ export const UserProvider = ({ children }) => {
     const storedUser = localStorage.getItem('unformat_session');
     if (storedUser) {
       try {
-        setCurrentUser(JSON.parse(storedUser));
+        const user = JSON.parse(storedUser);
+        setCurrentUser(user);
+        
+        // Hydrate resume data
+        const savedResume = localStorage.getItem(`unformat_resume_${user.email}`);
+        if (savedResume) {
+          useResumeStore.getState().setResumeData(JSON.parse(savedResume));
+        }
       } catch (e) {
         localStorage.removeItem('unformat_session');
       }
     }
   }, []);
+
+  // Auto-save resume data whenever it changes
+  useEffect(() => {
+    if (!currentUser) return;
+    const unsub = useResumeStore.subscribe((state) => {
+      localStorage.setItem(`unformat_resume_${currentUser.email}`, JSON.stringify(state.data));
+    });
+    return unsub;
+  }, [currentUser]);
 
   const login = (email, password) => {
     // Mock standard login logic
@@ -55,10 +71,15 @@ export const UserProvider = ({ children }) => {
     };
     setCurrentUser(userObj);
     localStorage.setItem('unformat_session', JSON.stringify(userObj));
+    // Handle resume data
+    const savedResume = localStorage.getItem(`unformat_resume_${userObj.email}`);
+    const { updatePersonalInfo, setResumeData } = useResumeStore.getState();
     
-    // Auto-populate data into the resume store
-    const { updatePersonalInfo } = useResumeStore.getState();
-    updatePersonalInfo('name', userObj.name);
+    if (savedResume) {
+      setResumeData(JSON.parse(savedResume));
+    } else {
+      updatePersonalInfo('name', userObj.name);
+    }
 
     setIsAuthModalOpen(false);
   };
@@ -102,12 +123,17 @@ export const UserProvider = ({ children }) => {
 
       setCurrentUser(userObj);
       localStorage.setItem('unformat_session', JSON.stringify(userObj));
+      // Handle resume data
+      const savedResume = localStorage.getItem(`unformat_resume_${userObj.email}`);
+      const { updatePersonalInfo, setResumeData } = useResumeStore.getState();
       
-      // Auto-populate data into the resume store
-      const { updatePersonalInfo } = useResumeStore.getState();
-      updatePersonalInfo('name', fullName);
-      if (decodedGoogleUser.picture) {
-        updatePersonalInfo('profilePicUrl', decodedGoogleUser.picture);
+      if (savedResume) {
+        setResumeData(JSON.parse(savedResume));
+      } else {
+        updatePersonalInfo('name', fullName);
+        if (decodedGoogleUser.picture) {
+          updatePersonalInfo('profilePicUrl', decodedGoogleUser.picture);
+        }
       }
 
       setIsAuthModalOpen(false);
@@ -119,6 +145,7 @@ export const UserProvider = ({ children }) => {
   const logout = () => {
     setCurrentUser(null);
     localStorage.removeItem('unformat_session');
+    useResumeStore.getState().resetResumeData();
   };
 
   const openAuthModal = () => {
