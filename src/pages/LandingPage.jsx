@@ -119,7 +119,7 @@ const LandingPage = () => {
       </section>
 
       {/* Scroll-Triggered Features 2x2 Grid */}
-      <section className="px-8 lg:px-24 py-32 bg-zinc-950 border-t border-zinc-900">
+      <section id="features" className="px-8 lg:px-24 py-32 bg-zinc-950 border-t border-zinc-900">
         <div className="max-w-5xl mx-auto">
           <div className="text-center mb-24">
             <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">Powerful Engine, Premium Results</h2>
