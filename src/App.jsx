@@ -10,6 +10,7 @@ import PreviewPane from './components/PreviewPane';
 import LandingPage from './pages/LandingPage';
 import PrivacyPolicy from './pages/PrivacyPolicy';
 import TermsOfService from './pages/TermsOfService';
+import PaywallModal from './components/PaywallModal';
 import Templates from './pages/Templates';
 import AdminDashboard from './pages/AdminDashboard';
 import AuthModal from './components/AuthModal';
@@ -96,6 +97,8 @@ function App() {
         <link rel="canonical" href="https://unformat.com" />
       </Helmet>
       <AppRoutes />
+      <AuthModal />
+      <PaywallModal />
     </BrowserRouter>
   );
 }

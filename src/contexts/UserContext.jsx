@@ -14,6 +14,8 @@ export const useUser = () => {
 export const UserProvider = ({ children }) => {
   const [currentUser, setCurrentUser] = useState(null);
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
+  const [isPaywallOpen, setIsPaywallOpen] = useState(false);
+  const [paywallTrigger, setPaywallTrigger] = useState('upgrade');
 
   // Restore session from local storage
   useEffect(() => {
@@ -52,7 +54,9 @@ export const UserProvider = ({ children }) => {
         firstName: email.split('@')[0],
         lastName: '',
         avatar: email.charAt(0).toUpperCase(),
-        isAdmin: email === 'admin@unformat.com'
+        isAdmin: email === 'admin@unformat.com',
+        tier: 'pro',
+        downloadCount: 0
       };
       setCurrentUser(userObj);
       localStorage.setItem('unformat_session', JSON.stringify(userObj));
@@ -78,7 +82,9 @@ export const UserProvider = ({ children }) => {
       firstName: user.firstName,
       lastName: user.lastName,
       avatar: user.firstName.charAt(0).toUpperCase(),
-      isAdmin: false
+      isAdmin: false,
+      tier: user.tier || 'free',
+      downloadCount: user.downloadCount || 0
     };
 
     setCurrentUser(userObj);
@@ -95,7 +101,14 @@ export const UserProvider = ({ children }) => {
       return { success: false, error: "An account with this email already exists." };
     }
 
-    const newUser = { firstName, lastName, email, password };
+    const newUser = { 
+      firstName, 
+      lastName, 
+      email, 
+      password,
+      tier: 'free',
+      downloadCount: 0
+    };
     users.push(newUser);
     localStorage.setItem('unformat_users', JSON.stringify(users));
 
@@ -105,7 +118,9 @@ export const UserProvider = ({ children }) => {
       firstName,
       lastName,
       avatar: firstName.charAt(0).toUpperCase(),
-      isAdmin: false
+      isAdmin: false,
+      tier: 'free',
+      downloadCount: 0
     };
     setCurrentUser(userObj);
     localStorage.setItem('unformat_session', JSON.stringify(userObj));
@@ -158,7 +173,9 @@ export const UserProvider = ({ children }) => {
         firstName,
         lastName,
         avatar: decodedGoogleUser.picture || firstName.charAt(0).toUpperCase(),
-        isAdmin: false
+        isAdmin: false,
+        tier: 'free',
+        downloadCount: 0
       };
 
       setCurrentUser(userObj);
@@ -196,15 +213,73 @@ export const UserProvider = ({ children }) => {
     setIsAuthModalOpen(false);
   };
 
+  const openPaywall = (trigger = 'upgrade') => {
+    setPaywallTrigger(trigger);
+    setIsPaywallOpen(true);
+  };
+
+  const closePaywall = () => {
+    setIsPaywallOpen(false);
+  };
+
+  const incrementDownloadCount = () => {
+    if (!currentUser) return;
+    const updatedUser = {
+      ...currentUser,
+      downloadCount: (currentUser.downloadCount || 0) + 1
+    };
+    setCurrentUser(updatedUser);
+    localStorage.setItem('unformat_session', JSON.stringify(updatedUser));
+    
+    // Also update in users array
+    const usersStr = localStorage.getItem('unformat_users');
+    if (usersStr) {
+      const users = JSON.parse(usersStr);
+      const userIndex = users.findIndex(u => u.email === currentUser.email);
+      if (userIndex !== -1) {
+        users[userIndex].downloadCount = updatedUser.downloadCount;
+        localStorage.setItem('unformat_users', JSON.stringify(users));
+      }
+    }
+  };
+
+  const upgradeToPass = () => {
+    if (!currentUser) return;
+    const updatedUser = {
+      ...currentUser,
+      tier: 'pass'
+    };
+    setCurrentUser(updatedUser);
+    localStorage.setItem('unformat_session', JSON.stringify(updatedUser));
+    
+    // Also update in users array
+    const usersStr = localStorage.getItem('unformat_users');
+    if (usersStr) {
+      const users = JSON.parse(usersStr);
+      const userIndex = users.findIndex(u => u.email === currentUser.email);
+      if (userIndex !== -1) {
+        users[userIndex].tier = 'pass';
+        localStorage.setItem('unformat_users', JSON.stringify(users));
+      }
+    }
+    setIsPaywallOpen(false);
+  };
+
   const value = {
     currentUser,
     isAuthModalOpen,
+    isPaywallOpen,
+    paywallTrigger,
     login,
     signup,
     loginWithGoogle,
     logout,
     openAuthModal,
-    closeAuthModal
+    closeAuthModal,
+    openPaywall,
+    closePaywall,
+    incrementDownloadCount,
+    upgradeToPass
   };
 
   return (

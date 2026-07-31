@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useResumeStore } from '../../store/useResumeStore';
+import { useUser } from '../../contexts/UserContext';
 import { Plus, Trash2, PlusCircle, Sparkles } from 'lucide-react';
 
 const inputStyles = "w-full bg-zinc-950 text-zinc-100 border-b border-zinc-800 pb-1.5 mb-3 focus:border-zinc-400 focus:outline-none transition-colors placeholder-zinc-700 text-sm";
@@ -8,10 +9,16 @@ const buttonStyles = "flex items-center justify-center gap-2 w-full py-2.5 borde
 
 const ExperienceForm = () => {
   const { data, updateArrayItem, addArrayItem, removeArrayItem, addExperienceBullet, removeExperienceBullet, updateExperienceBullet } = useResumeStore();
+  const { currentUser, openPaywall } = useUser();
   const [enhancingBullets, setEnhancingBullets] = useState(new Set());
 
   const handleEnhance = async (expId, bulletId, text) => {
     if (!text.trim()) return;
+    
+    if (currentUser?.tier === 'free') {
+      openPaywall('ai_enhance');
+      return;
+    }
     
     // Set loading state
     setEnhancingBullets((prev) => new Set(prev).add(bulletId));

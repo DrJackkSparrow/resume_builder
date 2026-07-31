@@ -10,7 +10,7 @@ import HarvardTemplate from '../components/templates/HarvardTemplate';
 import ModernSidebarTemplate from '../components/templates/ModernSidebarTemplate';
 
 const Dashboard = () => {
-  const { currentUser, logout } = useUser();
+  const { currentUser, logout, openPaywall, incrementDownloadCount } = useUser();
   const { data } = useResumeStore();
   const navigate = useNavigate();
   const [isExporting, setIsExporting] = useState(false);
@@ -24,6 +24,17 @@ const Dashboard = () => {
   if (!currentUser) return null;
 
   const handleDownload = () => {
+    if (currentUser.tier === 'free') {
+      if (data.activeTemplate === 'modern') {
+        openPaywall('premium_template');
+        return;
+      }
+      if (currentUser.downloadCount >= 2) {
+        openPaywall('download_limit');
+        return;
+      }
+    }
+
     setIsExporting(true);
     
     setTimeout(() => {
@@ -53,6 +64,7 @@ const Dashboard = () => {
           element.style.position = '';
           element.style.top = '';
           setIsExporting(false);
+          incrementDownloadCount();
         }).catch(err => {
           console.error('PDF Export Error:', err);
           element.classList.add('hidden');

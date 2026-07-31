@@ -7,13 +7,24 @@ import html2pdf from 'html2pdf.js';
 
 const NavBar = () => {
   const { data, setActiveTemplate } = useResumeStore();
-  const { currentUser, openAuthModal, logout } = useUser();
+  const { currentUser, openAuthModal, logout, openPaywall, incrementDownloadCount } = useUser();
   const [isExporting, setIsExporting] = useState(false);
 
   const handleDownload = () => {
     if (!currentUser) {
       openAuthModal();
       return;
+    }
+
+    if (currentUser.tier === 'free') {
+      if (data.activeTemplate === 'modern') {
+        openPaywall('premium_template');
+        return;
+      }
+      if (currentUser.downloadCount >= 2) {
+        openPaywall('download_limit');
+        return;
+      }
     }
     
     setIsExporting(true);
@@ -37,6 +48,7 @@ const NavBar = () => {
 
         html2pdf().set(opt).from(element).save().then(() => {
           setIsExporting(false);
+          incrementDownloadCount();
         }).catch(err => {
           console.error('PDF Export Error:', err);
           setIsExporting(false);

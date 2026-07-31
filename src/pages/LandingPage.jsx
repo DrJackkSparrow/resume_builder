@@ -316,6 +316,99 @@ const LandingPage = () => {
           </div>
         </div>
       </section>
+      {/* Pricing Section */}
+      <section id="pricing" className="px-8 lg:px-24 py-32 bg-zinc-950 border-t border-zinc-900">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-24">
+            <h2 className="text-3xl md:text-5xl font-bold text-white mb-6 tracking-tight">Stop Subscribing. Start Landing Interviews.</h2>
+            <p className="text-zinc-400 text-lg max-w-2xl mx-auto">
+              We hate subscription traps as much as you do. Choose the pass that fits your job search timeline.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
+            
+            {/* Free Tier */}
+            <div className="bg-zinc-900/40 border border-zinc-800 rounded-2xl p-8 flex flex-col">
+              <h3 className="text-xl font-bold text-white mb-2">Free Forever</h3>
+              <p className="text-sm text-zinc-400 mb-6 flex-grow">The hook. Perfect for quick edits.</p>
+              <div className="mb-8">
+                <span className="text-4xl font-black text-white">₹0</span>
+              </div>
+              <ul className="space-y-4 mb-8 text-sm text-zinc-300 font-medium">
+                <li className="flex items-start gap-3"><svg className="w-5 h-5 text-emerald-500 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg> 1 active resume saved</li>
+                <li className="flex items-start gap-3"><svg className="w-5 h-5 text-emerald-500 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg> Access to basic ATS templates</li>
+                <li className="flex items-start gap-3"><svg className="w-5 h-5 text-emerald-500 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg> 2 free PDF downloads/month</li>
+                <li className="flex items-start gap-3 text-zinc-500"><svg className="w-5 h-5 text-zinc-700 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" /></svg> Preview AI features (No export)</li>
+              </ul>
+              <Link to="/editor" className="w-full py-3 px-4 bg-zinc-800 text-white rounded-lg font-bold hover:bg-zinc-700 transition-colors text-center mt-auto">
+                Get Started
+              </Link>
+            </div>
+
+            {/* Short-Term Pass (Highlighted) */}
+            <div className="bg-zinc-900 border-2 border-purple-500/50 rounded-2xl p-8 flex flex-col relative transform md:-translate-y-4 shadow-[0_0_40px_rgba(168,85,247,0.1)]">
+              <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-purple-500 text-white px-3 py-1 rounded-full text-xs font-bold tracking-widest uppercase">
+                Most Popular
+              </div>
+              <h3 className="text-xl font-bold text-white mb-2">7-Day Pass</h3>
+              <p className="text-sm text-zinc-400 mb-6 flex-grow">The trust builder. Zero auto-renewal.</p>
+              <div className="mb-8 flex items-baseline gap-2">
+                <span className="text-4xl font-black text-white">₹99</span>
+                <span className="text-zinc-500 text-sm">/ 7 days</span>
+              </div>
+              <ul className="space-y-4 mb-8 text-sm text-zinc-300 font-medium">
+                <li className="flex items-start gap-3"><svg className="w-5 h-5 text-purple-400 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg> Unlimited PDF downloads</li>
+                <li className="flex items-start gap-3"><svg className="w-5 h-5 text-purple-400 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg> Premium Sidebar template</li>
+                <li className="flex items-start gap-3"><svg className="w-5 h-5 text-purple-400 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg> Unlimited AI Bullet Enhancer</li>
+                <li className="flex items-start gap-3"><svg className="w-5 h-5 text-purple-400 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg> No subscriptions, no traps</li>
+              </ul>
+              <button className="w-full py-3 px-4 bg-purple-600 text-white rounded-lg font-bold hover:bg-purple-500 transition-colors text-center mt-auto shadow-lg shadow-purple-500/20">
+                Buy Pass (~$2)
+              </button>
+            </div>
+
+            {/* Pro Subscription */}
+            <div className="bg-zinc-900/40 border border-zinc-800 rounded-2xl p-8 flex flex-col">
+              <h3 className="text-xl font-bold text-white mb-2">Pro</h3>
+              <p className="text-sm text-zinc-400 mb-6 flex-grow">For active, long-term searchers.</p>
+              <div className="mb-8 flex items-baseline gap-2">
+                <span className="text-4xl font-black text-white">₹199</span>
+                <span className="text-zinc-500 text-sm">/ month</span>
+              </div>
+              <ul className="space-y-4 mb-8 text-sm text-zinc-300 font-medium">
+                <li className="flex items-start gap-3"><svg className="w-5 h-5 text-emerald-500 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg> Unlimited resumes & templates</li>
+                <li className="flex items-start gap-3"><svg className="w-5 h-5 text-emerald-500 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg> All AI features included</li>
+                <li className="flex items-start gap-3"><svg className="w-5 h-5 text-emerald-500 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg> <strong className="text-white">AI Auto-Tailor</strong> (Paste JD)</li>
+                <li className="flex items-start gap-3"><svg className="w-5 h-5 text-emerald-500 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg> Cancel anytime</li>
+              </ul>
+              <button className="w-full py-3 px-4 bg-white text-zinc-950 rounded-lg font-bold hover:bg-zinc-200 transition-colors text-center mt-auto">
+                Subscribe (~$5)
+              </button>
+            </div>
+
+            {/* Lifetime */}
+            <div className="bg-zinc-900/40 border border-zinc-800 rounded-2xl p-8 flex flex-col">
+              <h3 className="text-xl font-bold text-white mb-2">Lifetime</h3>
+              <p className="text-sm text-zinc-400 mb-6 flex-grow">The cash injection. Own it forever.</p>
+              <div className="mb-8 flex items-baseline gap-2">
+                <span className="text-4xl font-black text-white">₹1,499</span>
+                <span className="text-zinc-500 text-sm">one-time</span>
+              </div>
+              <ul className="space-y-4 mb-8 text-sm text-zinc-300 font-medium">
+                <li className="flex items-start gap-3"><svg className="w-5 h-5 text-amber-500 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg> Permanent Pro access</li>
+                <li className="flex items-start gap-3"><svg className="w-5 h-5 text-amber-500 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg> No recurring charges</li>
+                <li className="flex items-start gap-3"><svg className="w-5 h-5 text-amber-500 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg> Early access to new templates</li>
+                <li className="flex items-start gap-3"><svg className="w-5 h-5 text-amber-500 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg> Support solo developers</li>
+              </ul>
+              <button className="w-full py-3 px-4 bg-zinc-800 text-white rounded-lg font-bold hover:bg-zinc-700 transition-colors text-center mt-auto border border-zinc-700">
+                Get Lifetime (~$25)
+              </button>
+            </div>
+            
+          </div>
+        </div>
+      </section>
     </motion.main>
   );
 };
