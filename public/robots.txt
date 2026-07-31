@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /
+Allow: /templates
+Allow: /privacy
+Allow: /terms
+Disallow: /editor
+Disallow: /admin
+
+Sitemap: https://unformat.com/sitemap.xml

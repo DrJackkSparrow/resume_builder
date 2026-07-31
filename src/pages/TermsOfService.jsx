@@ -1,8 +1,21 @@
 import React from 'react';
+import { motion } from 'framer-motion';
+import { Helmet } from 'react-helmet-async';
 
 const TermsOfService = () => {
   return (
-    <article className="min-h-screen bg-zinc-950 text-zinc-100 font-sans py-24 px-8 lg:px-24">
+    <motion.article 
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: -20 }}
+      transition={{ duration: 0.4, ease: "easeOut" }}
+      className="min-h-screen bg-zinc-950 text-zinc-100 font-sans py-24 px-8 lg:px-24"
+    >
+      <Helmet>
+        <title>Terms of Service | Unformat</title>
+        <meta name="description" content="Read the terms of service for Unformat." />
+        <link rel="canonical" href="https://unformat.com/terms" />
+      </Helmet>
       <div className="max-w-3xl mx-auto">
         <header>
           <h1 className="text-4xl font-bold text-white mb-4">Terms of Service</h1>
@@ -39,7 +52,7 @@ const TermsOfService = () => {
           </section>
         </div>
       </div>
-    </article>
+    </motion.article>
   );
 };
 

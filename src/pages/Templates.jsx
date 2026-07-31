@@ -1,6 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { useResumeStore } from '../store/useResumeStore';
+import { motion } from 'framer-motion';
 
 const Templates = () => {
   const navigate = useNavigate();
@@ -12,27 +13,33 @@ const Templates = () => {
   };
 
   return (
-    <article className="min-h-screen bg-zinc-950 text-zinc-100 font-sans py-24 px-8 lg:px-24">
+    <motion.article 
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: -20 }}
+      transition={{ duration: 0.4, ease: "easeOut" }}
+      className="min-h-screen bg-zinc-950 text-zinc-100 font-sans py-24 px-8 lg:px-24"
+    >
       <Helmet>
-        <title>High-Performance Resume Templates | Unformat</title>
-        <meta name="description" content="Browse our gallery of minimalist, code-driven resume templates proven to beat Applicant Tracking Systems, including the industry-standard Harvard and Jake's templates." />
-        <meta name="keywords" content="best ATS templates 2026, Jake's resume template, single-column resume, tech resume layouts" />
+        <title>ATS Resume Templates | Harvard & Jake's Resume | Unformat</title>
+        <meta name="description" content="Browse our strict, code-driven ATS resume templates. Generate a perfect Harvard Resume template or Jake's Resume template instantly with guaranteed parsing." />
+        <meta name="keywords" content="Jake's Resume template, Harvard Resume template, ATS resume template, reverse chronological resume, software engineer resume" />
+        <link rel="canonical" href="https://unformat.com/templates" />
       </Helmet>
       
       <div className="max-w-7xl mx-auto text-center">
         <header>
           <h1 className="text-4xl md:text-6xl font-bold text-white mb-6">ATS-Optimized Resume Templates</h1>
           <p className="text-lg text-zinc-400 mb-16 max-w-2xl mx-auto">
-            Minimalist, code-driven layouts proven to beat the algorithms.
+            These aren't design themes. These are highly structured, code-driven document architectures built to beat the parsers.
           </p>
         </header>
 
         <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 text-left">
-          {/* Template Card 1 */}
+          {/* Template Card 1 - Harvard */}
           <div className="bg-zinc-900 border border-zinc-800 rounded-xl overflow-hidden group hover:border-zinc-600 transition-colors">
             <div className="h-64 bg-zinc-800/50 p-6 flex items-center justify-center">
                <div className="w-full h-full bg-white shadow-lg rounded-sm opacity-90 group-hover:opacity-100 transition-all duration-300 flex flex-col p-3 overflow-hidden border border-zinc-200">
-                  {/* Harvard Style: Left aligned header, clear sections */}
                   <div className="h-3 w-1/3 bg-zinc-900 mb-1 rounded"></div>
                   <div className="h-1 w-1/2 bg-zinc-400 mb-3 rounded"></div>
                   <div className="w-full border-b border-zinc-800 mb-2"></div>
@@ -54,9 +61,9 @@ const Templates = () => {
                </div>
             </div>
             <div className="p-6">
-              <h3 className="text-xl font-bold text-white mb-2">The Harvard</h3>
+              <h2 className="text-xl font-bold text-white mb-2">Harvard Resume Template</h2>
               <p className="text-sm text-zinc-400 mb-6 leading-relaxed">
-                The gold standard for business, finance, and general professional roles. Strict reverse-chronological, text-based, and heavily ATS-optimized.
+                The gold standard for business, finance, and consulting. This rigorous reverse-chronological layout is the definitive ATS resume standard.
               </p>
               <button 
                 onClick={() => handleUseTemplate('harvard')}
@@ -67,11 +74,10 @@ const Templates = () => {
             </div>
           </div>
 
-          {/* Template Card 2 */}
+          {/* Template Card 2 - Jake's */}
           <div className="bg-zinc-900 border border-zinc-800 rounded-xl overflow-hidden group hover:border-zinc-600 transition-colors">
             <div className="h-64 bg-zinc-800/50 p-6 flex items-center justify-center">
                <div className="w-full h-full bg-white shadow-lg rounded-sm opacity-90 group-hover:opacity-100 transition-all duration-300 flex flex-col items-center p-3 overflow-hidden border border-zinc-200">
-                  {/* Jake's Style: Centered heavy header, dense text */}
                   <div className="h-3 w-1/2 bg-zinc-900 mb-1.5 rounded"></div>
                   <div className="flex gap-1 mb-2 w-full justify-center">
                     <div className="h-1 w-1/6 bg-zinc-400 rounded"></div>
@@ -94,9 +100,9 @@ const Templates = () => {
                </div>
             </div>
             <div className="p-6">
-              <h3 className="text-xl font-bold text-white mb-2">Jake's Resume</h3>
+              <h2 className="text-xl font-bold text-white mb-2">Jake's Resume Template</h2>
               <p className="text-sm text-zinc-400 mb-6 leading-relaxed">
-                The undisputed champion for tech and engineering. Originally built in LaTeX, optimized for dense technical skills and projects.
+                The undisputed champion for software engineering. Built for ultra-high-density text, maximizing technical skills impact for tech recruiters.
               </p>
               <button 
                 onClick={() => handleUseTemplate('jake')}
@@ -119,7 +125,7 @@ const Templates = () => {
                <div className="absolute inset-0 bg-gradient-to-t from-zinc-950 to-transparent"></div>
             </div>
             <div className="p-6 flex-grow flex flex-col">
-              <h3 className="text-xl font-bold text-zinc-500 mb-2">Modern Creative</h3>
+              <h2 className="text-xl font-bold text-zinc-500 mb-2">Modern Creative</h2>
               <p className="text-sm text-zinc-600 mb-6 leading-relaxed flex-grow">
                 A highly requested 2-column layout designed for creative professionals, marketing, and design roles. Currently in development.
               </p>
@@ -133,7 +139,7 @@ const Templates = () => {
           </div>
         </section>
       </div>
-    </article>
+    </motion.article>
   );
 };
 

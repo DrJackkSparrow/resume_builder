@@ -44,23 +44,61 @@ export const UserProvider = ({ children }) => {
   }, [currentUser]);
 
   const login = (email, password) => {
-    // Mock standard login logic
-    const isAdmin = email === 'admin@unformat.com';
+    if (email === 'admin@unformat.com' || email === 'mock_user@gmail.com') {
+      // Allow bypass for demo accounts
+      const userObj = {
+        email,
+        name: email.split('@')[0],
+        firstName: email.split('@')[0],
+        lastName: '',
+        avatar: email.charAt(0).toUpperCase(),
+        isAdmin: email === 'admin@unformat.com'
+      };
+      setCurrentUser(userObj);
+      localStorage.setItem('unformat_session', JSON.stringify(userObj));
+      setIsAuthModalOpen(false);
+      return { success: true };
+    }
+
+    const usersStr = localStorage.getItem('unformat_users');
+    const users = usersStr ? JSON.parse(usersStr) : [];
+    
+    const user = users.find(u => u.email === email);
+    if (!user) {
+      return { success: false, error: "Account not found. Please sign up." };
+    }
+    
+    if (user.password !== password) {
+      return { success: false, error: "Invalid email or password." };
+    }
+
     const userObj = {
-      email,
-      name: email.split('@')[0], // Fallback if no names
-      firstName: email.split('@')[0],
-      lastName: '',
-      avatar: email.charAt(0).toUpperCase(),
-      isAdmin
+      email: user.email,
+      name: `${user.firstName} ${user.lastName}`,
+      firstName: user.firstName,
+      lastName: user.lastName,
+      avatar: user.firstName.charAt(0).toUpperCase(),
+      isAdmin: false
     };
+
     setCurrentUser(userObj);
     localStorage.setItem('unformat_session', JSON.stringify(userObj));
     setIsAuthModalOpen(false);
+    return { success: true };
   };
 
   const signup = (firstName, lastName, email, password) => {
-    // Mock signup logic
+    const usersStr = localStorage.getItem('unformat_users');
+    const users = usersStr ? JSON.parse(usersStr) : [];
+
+    if (users.some(u => u.email === email)) {
+      return { success: false, error: "An account with this email already exists." };
+    }
+
+    const newUser = { firstName, lastName, email, password };
+    users.push(newUser);
+    localStorage.setItem('unformat_users', JSON.stringify(users));
+
     const userObj = {
       email,
       name: `${firstName} ${lastName}`,
@@ -71,6 +109,7 @@ export const UserProvider = ({ children }) => {
     };
     setCurrentUser(userObj);
     localStorage.setItem('unformat_session', JSON.stringify(userObj));
+
     // Handle resume data
     const savedResume = localStorage.getItem(`unformat_resume_${userObj.email}`);
     const { updatePersonalInfo, setResumeData } = useResumeStore.getState();
@@ -82,6 +121,7 @@ export const UserProvider = ({ children }) => {
     }
 
     setIsAuthModalOpen(false);
+    return { success: true };
   };
 
   const loginWithGoogle = async (credentialResponse) => {

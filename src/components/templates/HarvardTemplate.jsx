@@ -1,7 +1,7 @@
 import React from 'react';
 
 const HarvardTemplate = ({ data }) => {
-  const { personalInfo, objective, experience, education, projects, skills, sectionOrder } = data;
+  const { personalInfo, objective, experience, education, projects, skills, sectionOrder, sectionTitles, customSections } = data;
 
   // Helper to render contact info separated by bullets
   const renderContactInfo = () => {
@@ -27,7 +27,7 @@ const HarvardTemplate = ({ data }) => {
 
   const SectionHeader = ({ title }) => (
     <h2 
-      className="text-[14px] font-bold text-black text-center mb-2 mt-4 font-serif"
+      className="text-[14px] font-bold text-black text-center mb-2 mt-4 font-serif uppercase tracking-wide"
       style={{ marginBottom: 'var(--section-margin)' }}
     >
       {title}
@@ -35,7 +35,7 @@ const HarvardTemplate = ({ data }) => {
   );
 
   const renderPersonalInfo = () => (
-    <header className="text-center font-serif">
+    <header className="text-center font-serif" key="personalInfo">
       <h1 className="text-2xl font-bold text-black mb-1">{personalInfo.name || 'Firstname Lastname'}</h1>
       {renderContactInfo()}
     </header>
@@ -44,8 +44,8 @@ const HarvardTemplate = ({ data }) => {
   const renderObjective = () => {
     if (!objective) return null;
     return (
-      <section>
-        <SectionHeader title="Summary" />
+      <section key="objective">
+        <SectionHeader title={sectionTitles.objective || 'Summary'} />
         <p className="text-[12.5px] text-black font-serif">
           {objective}
         </p>
@@ -56,8 +56,8 @@ const HarvardTemplate = ({ data }) => {
   const renderExperience = () => {
     if (!experience?.length) return null;
     return (
-      <section>
-        <SectionHeader title="Experience" />
+      <section key="experience">
+        <SectionHeader title={sectionTitles.experience || 'Experience'} />
         <div className="space-y-4 font-serif">
           {experience.map((exp) => (
             <div key={exp.id}>
@@ -84,8 +84,8 @@ const HarvardTemplate = ({ data }) => {
   const renderEducation = () => {
     if (!education?.length) return null;
     return (
-      <section>
-        <SectionHeader title="Education" />
+      <section key="education">
+        <SectionHeader title={sectionTitles.education || 'Education'} />
         <div className="space-y-4 font-serif">
           {education.map((edu) => (
             <div key={edu.id}>
@@ -107,8 +107,8 @@ const HarvardTemplate = ({ data }) => {
   const renderProjects = () => {
     if (!projects?.length) return null;
     return (
-      <section>
-        <SectionHeader title="Projects" />
+      <section key="projects">
+        <SectionHeader title={sectionTitles.projects || 'Projects'} />
         <div className="space-y-4 font-serif">
           {projects.map((proj) => (
             <div key={proj.id}>
@@ -135,13 +135,42 @@ const HarvardTemplate = ({ data }) => {
   const renderSkills = () => {
     if (!skills?.length) return null;
     return (
-      <section>
-        <SectionHeader title="Skills & Interests" />
+      <section key="skills">
+        <SectionHeader title={sectionTitles.skills || 'Skills & Interests'} />
         <div className="text-[12.5px] font-serif space-y-0.5">
           {skills.map((group) => (
             <div key={group.id}>
               {group.category && <span className="font-bold">{group.category}: </span>}
               <span>{group.items}</span>
+            </div>
+          ))}
+        </div>
+      </section>
+    );
+  };
+
+  const renderCustomSection = (sectionId) => {
+    const items = customSections[sectionId];
+    if (!items || items.length === 0) return null;
+    
+    return (
+      <section key={sectionId}>
+        <SectionHeader title={sectionTitles[sectionId] || 'Custom Section'} />
+        <div className="space-y-4 font-serif">
+          {items.map((item) => (
+            <div key={item.id}>
+              <div className="flex justify-between items-baseline font-bold text-[13px] mb-1">
+                <span>
+                  {item.title}
+                  {item.subtitle && <span className="font-normal"> - {item.subtitle}</span>}
+                </span>
+                {item.date && <span className="font-normal">{item.date}</span>}
+              </div>
+              {item.description && (
+                <ul className="list-disc list-outside ml-5 text-[12.5px] text-black space-y-0.5">
+                  <li>{item.description}</li>
+                </ul>
+              )}
             </div>
           ))}
         </div>
@@ -164,8 +193,14 @@ const HarvardTemplate = ({ data }) => {
       style={{ lineHeight: 'var(--line-height)' }}
     >
       {sectionOrder.map((sectionId) => {
+        if (sectionId.startsWith('spacer-')) {
+          return <div key={sectionId} style={{ height: 'calc(var(--section-margin) + 8px)' }} />;
+        }
+        if (customSections && customSections[sectionId]) {
+          return renderCustomSection(sectionId);
+        }
         const renderSection = renderers[sectionId];
-        return renderSection ? <React.Fragment key={sectionId}>{renderSection()}</React.Fragment> : null;
+        return renderSection ? renderSection() : null;
       })}
     </div>
   );

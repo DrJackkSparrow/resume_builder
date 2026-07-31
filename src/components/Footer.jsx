@@ -6,7 +6,7 @@ const Footer = () => {
     <footer className="w-full bg-zinc-950 border-t border-zinc-900/50 py-12 px-8 lg:px-24">
       <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between">
         <div className="flex items-center gap-3 mb-6 md:mb-0">
-          <img src="/unformat_logo.jpg" alt="Unformat Logo" className="w-6 h-6 rounded-md border border-zinc-800" />
+          <img src="/unformat_logo.jpg" alt="Unformat Logo" width="24" height="24" loading="lazy" className="w-6 h-6 rounded-md border border-zinc-800" />
           <span className="text-zinc-500 text-sm font-medium">© 2026 Unformat. All rights reserved.</span>
         </div>
         

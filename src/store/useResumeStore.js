@@ -59,6 +59,16 @@ const initialResumeData = {
     }
   ],
   sectionOrder: ['personalInfo', 'objective', 'experience', 'education', 'projects', 'skills'],
+  hiddenSections: [],
+  customSections: {}, // e.g. { 'custom-1': [{ id: 'item-1', title: 'Award', subtitle: 'Org', date: '2023', description: 'Won first place' }] }
+  sectionTitles: {
+    personalInfo: 'Personal Info',
+    objective: 'Professional Summary',
+    experience: 'Experience',
+    education: 'Education',
+    projects: 'Projects',
+    skills: 'Technical Skills'
+  },
   activeTemplate: 'jake',
   formatting: {
     lineHeight: 1.15,
@@ -86,7 +96,6 @@ export const useResumeStore = create((set) => ({
       data: { ...state.data, activeTemplate: templateId }
     })),
 
-  
   reorderSections: (activeId, overId) =>
     set((state) => {
       const oldIndex = state.data.sectionOrder.indexOf(activeId);
@@ -101,6 +110,109 @@ export const useResumeStore = create((set) => ({
       };
     }),
   
+  // Dynamic Section Management
+  updateSectionTitle: (sectionId, newTitle) => 
+    set((state) => ({
+      data: {
+        ...state.data,
+        sectionTitles: { ...state.data.sectionTitles, [sectionId]: newTitle }
+      }
+    })),
+
+  hideSection: (sectionId) =>
+    set((state) => {
+      const newOrder = state.data.sectionOrder.filter(id => id !== sectionId);
+      return {
+        data: {
+          ...state.data,
+          sectionOrder: newOrder,
+          hiddenSections: [...state.data.hiddenSections, sectionId]
+        }
+      };
+    }),
+
+  restoreSection: (sectionId) =>
+    set((state) => {
+      const newHidden = state.data.hiddenSections.filter(id => id !== sectionId);
+      return {
+        data: {
+          ...state.data,
+          sectionOrder: [...state.data.sectionOrder, sectionId],
+          hiddenSections: newHidden
+        }
+      };
+    }),
+
+  addSpacer: (sectionId) =>
+    set((state) => ({
+      data: {
+        ...state.data,
+        sectionOrder: [...state.data.sectionOrder, sectionId]
+      }
+    })),
+
+  addCustomSection: (sectionId, title) =>
+    set((state) => ({
+      data: {
+        ...state.data,
+        sectionOrder: [...state.data.sectionOrder, sectionId],
+        sectionTitles: { ...state.data.sectionTitles, [sectionId]: title },
+        customSections: { ...state.data.customSections, [sectionId]: [] }
+      }
+    })),
+
+  deleteCustomSection: (sectionId) =>
+    set((state) => {
+      const newOrder = state.data.sectionOrder.filter(id => id !== sectionId);
+      const newCustom = { ...state.data.customSections };
+      delete newCustom[sectionId];
+      const newTitles = { ...state.data.sectionTitles };
+      delete newTitles[sectionId];
+      return {
+        data: {
+          ...state.data,
+          sectionOrder: newOrder,
+          customSections: newCustom,
+          sectionTitles: newTitles
+        }
+      };
+    }),
+
+  addCustomSectionItem: (sectionId, newItem) =>
+    set((state) => ({
+      data: {
+        ...state.data,
+        customSections: {
+          ...state.data.customSections,
+          [sectionId]: [...(state.data.customSections[sectionId] || []), newItem]
+        }
+      }
+    })),
+  
+  updateCustomSectionItem: (sectionId, itemId, field, value) =>
+    set((state) => ({
+      data: {
+        ...state.data,
+        customSections: {
+          ...state.data.customSections,
+          [sectionId]: state.data.customSections[sectionId].map(item =>
+            item.id === itemId ? { ...item, [field]: value } : item
+          )
+        }
+      }
+    })),
+
+  removeCustomSectionItem: (sectionId, itemId) =>
+    set((state) => ({
+      data: {
+        ...state.data,
+        customSections: {
+          ...state.data.customSections,
+          [sectionId]: state.data.customSections[sectionId].filter(item => item.id !== itemId)
+        }
+      }
+    })),
+
   // Generic update for top-level string fields like objective
   updateField: (field, value) => 
     set((state) => ({ 

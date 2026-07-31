@@ -1,7 +1,7 @@
 import React from 'react';
 
 const ModernSidebarTemplate = ({ data }) => {
-  const { personalInfo, objective, experience, education, projects, skills, sectionOrder } = data;
+  const { personalInfo, objective, experience, education, projects, skills, sectionOrder, sectionTitles, customSections } = data;
 
   const renderContactInfo = () => {
     return (
@@ -54,9 +54,9 @@ const ModernSidebarTemplate = ({ data }) => {
         )}
 
         {/* Sidebar Skills mapped to "SKILLS" */}
-        {skills?.length > 0 && (
+        {skills?.length > 0 && sectionOrder.includes('skills') && (
           <div className="mb-10">
-            <SidebarHeader title="Skills" />
+            <SidebarHeader title={sectionTitles.skills || "Skills"} />
             <ul className="list-disc list-inside text-[11px] space-y-3 pl-1 text-white/90">
               {skills.map(skill => (
                 <li key={skill.id} className="leading-snug">
@@ -67,9 +67,6 @@ const ModernSidebarTemplate = ({ data }) => {
             </ul>
           </div>
         )}
-
-        {/* Sidebar Projects mapped as "AWARDS" or just secondary skills area depending on user need. 
-            For now, we map nothing else here natively unless there's an awards array. */}
       </div>
 
       {/* RIGHT MAIN AREA */}
@@ -89,10 +86,38 @@ const ModernSidebarTemplate = ({ data }) => {
 
         {/* Dynamic Sections mapped to main area */}
         {sectionOrder.map((sectionId) => {
+          if (sectionId === 'skills') return null; // handled in sidebar
+
+          if (customSections && customSections[sectionId]) {
+            const items = customSections[sectionId];
+            if (!items || items.length === 0) return null;
+            return (
+              <div key={sectionId}>
+                <MainHeader title={sectionTitles[sectionId] || "Custom Section"} />
+                <div className="space-y-5">
+                  {items.map(item => (
+                    <div key={item.id} className="text-[11px]">
+                      <h4 className="font-bold text-[#901C2B]">{item.title}</h4>
+                      <div className="italic text-gray-600 mb-2 flex justify-between">
+                        <span>{item.subtitle}</span>
+                        <span>{item.date}</span>
+                      </div>
+                      {item.description && (
+                        <ul className="text-gray-800 space-y-1 mt-2">
+                          <li className="leading-snug">{item.description}</li>
+                        </ul>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              </div>
+            );
+          }
+
           if (sectionId === 'objective' && objective) {
             return (
               <div key="objective">
-                <MainHeader title="Objective" />
+                <MainHeader title={sectionTitles.objective || "Objective"} />
                 <p className="text-[11px] text-gray-800 font-medium italic leading-relaxed">
                   {objective}
                 </p>
@@ -103,7 +128,7 @@ const ModernSidebarTemplate = ({ data }) => {
           if (sectionId === 'education' && education?.length > 0) {
             return (
               <div key="education">
-                <MainHeader title="Education" />
+                <MainHeader title={sectionTitles.education || "Education"} />
                 <div className="space-y-4">
                   {education.map(edu => (
                     <div key={edu.id} className="text-[11px]">
@@ -124,7 +149,7 @@ const ModernSidebarTemplate = ({ data }) => {
           if (sectionId === 'projects' && projects?.length > 0) {
             return (
               <div key="projects">
-                <MainHeader title="Extracurricular Activities" />
+                <MainHeader title={sectionTitles.projects || "Projects"} />
                 <div className="space-y-5">
                   {projects.map(proj => (
                     <div key={proj.id} className="text-[11px]">
@@ -149,7 +174,7 @@ const ModernSidebarTemplate = ({ data }) => {
           if (sectionId === 'experience' && experience?.length > 0) {
             return (
               <div key="experience">
-                <MainHeader title="Experience" />
+                <MainHeader title={sectionTitles.experience || "Experience"} />
                 <div className="space-y-5">
                   {experience.map(exp => (
                     <div key={exp.id} className="text-[11px]">
@@ -170,6 +195,10 @@ const ModernSidebarTemplate = ({ data }) => {
                 </div>
               </div>
             );
+          }
+
+          if (sectionId.startsWith('spacer-')) {
+            return <div key={sectionId} style={{ height: 'calc(var(--section-margin) + 8px)' }} />;
           }
 
           return null;

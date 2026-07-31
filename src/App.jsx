@@ -1,5 +1,7 @@
 import React from 'react';
-import { BrowserRouter, Routes, Route, Outlet } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Outlet, useLocation } from 'react-router-dom';
+import { AnimatePresence, motion } from 'framer-motion';
+import { Helmet } from 'react-helmet-async';
 import NavBar from './components/NavBar';
 import Header from './components/Header';
 import Footer from './components/Footer';
@@ -12,6 +14,8 @@ import Templates from './pages/Templates';
 import AdminDashboard from './pages/AdminDashboard';
 import AuthModal from './components/AuthModal';
 import ProtectedRoute from './components/ProtectedRoute';
+import Dashboard from './pages/Dashboard';
+import ForgotPassword from './pages/ForgotPassword';
 
 const MarketingLayout = () => {
   return (
@@ -29,7 +33,13 @@ const MarketingLayout = () => {
 // We extract the editor layout into a separate component for routing
 const EditorLayout = () => {
   return (
-    <div className="flex flex-col h-screen w-full overflow-hidden bg-white font-sans text-slate-900">
+    <motion.div 
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.3 }}
+      className="flex flex-col h-screen w-full overflow-hidden bg-white font-sans text-slate-900"
+    >
       <NavBar />
       <AuthModal />
       
@@ -45,19 +55,24 @@ const EditorLayout = () => {
           <PreviewPane />
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 };
 
-function App() {
+// Inner component to use location for AnimatePresence
+const AppRoutes = () => {
+  const location = useLocation();
+  
   return (
-    <BrowserRouter>
-      <Routes>
+    <AnimatePresence mode="wait">
+      <Routes location={location} key={location.pathname}>
         <Route element={<MarketingLayout />}>
           <Route path="/" element={<LandingPage />} />
           <Route path="/templates" element={<Templates />} />
           <Route path="/privacy" element={<PrivacyPolicy />} />
           <Route path="/terms" element={<TermsOfService />} />
+          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/forgot-password" element={<ForgotPassword />} />
         </Route>
         <Route path="/editor" element={<EditorLayout />} />
         
@@ -66,6 +81,18 @@ function App() {
           <Route path="/admin" element={<AdminDashboard />} />
         </Route>
       </Routes>
+    </AnimatePresence>
+  );
+};
+
+function App() {
+  return (
+    <BrowserRouter>
+      <Helmet defaultTitle="Unformat | ATS-Friendly Resume Builder" titleTemplate="%s | Unformat">
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="theme-color" content="#09090b" />
+      </Helmet>
+      <AppRoutes />
     </BrowserRouter>
   );
 }

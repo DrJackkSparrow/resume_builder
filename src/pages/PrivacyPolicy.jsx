@@ -1,8 +1,21 @@
 import React from 'react';
+import { motion } from 'framer-motion';
+import { Helmet } from 'react-helmet-async';
 
 const PrivacyPolicy = () => {
   return (
-    <article className="min-h-screen bg-zinc-950 text-zinc-100 font-sans py-24 px-8 lg:px-24">
+    <motion.article 
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: -20 }}
+      transition={{ duration: 0.4, ease: "easeOut" }}
+      className="min-h-screen bg-zinc-950 text-zinc-100 font-sans py-24 px-8 lg:px-24"
+    >
+      <Helmet>
+        <title>Privacy Policy | Unformat</title>
+        <meta name="description" content="Read the privacy policy for Unformat." />
+        <link rel="canonical" href="https://unformat.com/privacy" />
+      </Helmet>
       <div className="max-w-3xl mx-auto">
         <header>
           <h1 className="text-4xl font-bold text-white mb-4">Privacy Policy</h1>
@@ -40,7 +53,7 @@ const PrivacyPolicy = () => {
           </section>
         </div>
       </div>
-    </article>
+    </motion.article>
   );
 };
 

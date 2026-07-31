@@ -1,7 +1,7 @@
 import React from 'react';
 
 const JakeTemplate = ({ data }) => {
-  const { personalInfo, objective, experience, education, projects, skills, sectionOrder } = data;
+  const { personalInfo, objective, experience, education, projects, skills, sectionOrder, sectionTitles, customSections } = data;
 
   // Helper to render contact info separated by pipes
   const renderContactInfo = () => {
@@ -35,7 +35,7 @@ const JakeTemplate = ({ data }) => {
   );
 
   const renderPersonalInfo = () => (
-    <header className="text-center">
+    <header className="text-center" key="personalInfo">
       <h1 className="text-4xl font-normal text-black mb-1">{personalInfo.name || 'Jake Ryan'}</h1>
       {renderContactInfo()}
     </header>
@@ -44,8 +44,8 @@ const JakeTemplate = ({ data }) => {
   const renderObjective = () => {
     if (!objective) return null;
     return (
-      <section>
-        <SectionHeader title="Objective" />
+      <section key="objective">
+        <SectionHeader title={sectionTitles.objective || 'Objective'} />
         <p className="text-[11.5px] text-black">
           {objective}
         </p>
@@ -56,8 +56,8 @@ const JakeTemplate = ({ data }) => {
   const renderEducation = () => {
     if (!education?.length) return null;
     return (
-      <section>
-        <SectionHeader title="Education" />
+      <section key="education">
+        <SectionHeader title={sectionTitles.education || 'Education'} />
         <div className="space-y-3 font-serif">
           {education.map((edu) => (
             <div key={edu.id}>
@@ -79,8 +79,8 @@ const JakeTemplate = ({ data }) => {
   const renderExperience = () => {
     if (!experience?.length) return null;
     return (
-      <section>
-        <SectionHeader title="Experience" />
+      <section key="experience">
+        <SectionHeader title={sectionTitles.experience || 'Experience'} />
         <div className="space-y-4 font-serif">
           {experience.map((exp) => (
             <div key={exp.id}>
@@ -107,8 +107,8 @@ const JakeTemplate = ({ data }) => {
   const renderProjects = () => {
     if (!projects?.length) return null;
     return (
-      <section>
-        <SectionHeader title="Projects" />
+      <section key="projects">
+        <SectionHeader title={sectionTitles.projects || 'Projects'} />
         <div className="space-y-3 font-serif">
           {projects.map((proj) => (
             <div key={proj.id}>
@@ -135,13 +135,42 @@ const JakeTemplate = ({ data }) => {
   const renderSkills = () => {
     if (!skills?.length) return null;
     return (
-      <section>
-        <SectionHeader title="Technical Skills" />
+      <section key="skills">
+        <SectionHeader title={sectionTitles.skills || 'Technical Skills'} />
         <div className="text-[11.5px] space-y-0.5 text-black">
           {skills.map((group) => (
             <div key={group.id}>
               {group.category && <span className="font-bold">{group.category}: </span>}
               <span>{group.items}</span>
+            </div>
+          ))}
+        </div>
+      </section>
+    );
+  };
+
+  const renderCustomSection = (sectionId) => {
+    const items = customSections[sectionId];
+    if (!items || items.length === 0) return null;
+    
+    return (
+      <section key={sectionId}>
+        <SectionHeader title={sectionTitles[sectionId] || 'Custom Section'} />
+        <div className="space-y-3 font-serif">
+          {items.map((item) => (
+            <div key={item.id}>
+              <div className="flex justify-between items-baseline font-bold text-[12px]">
+                <span>
+                  {item.title}
+                  {item.subtitle && <span className="font-normal italic"> | {item.subtitle}</span>}
+                </span>
+                {item.date && <span className="font-normal">{item.date}</span>}
+              </div>
+              {item.description && (
+                <ul className="list-disc list-outside ml-5 text-[11.5px] text-black space-y-0.5 mt-0.5 mb-1">
+                  <li>{item.description}</li>
+                </ul>
+              )}
             </div>
           ))}
         </div>
@@ -164,8 +193,14 @@ const JakeTemplate = ({ data }) => {
       style={{ lineHeight: 'var(--line-height)', fontFamily: '"Times New Roman", Times, serif' }}
     >
       {sectionOrder.map((sectionId) => {
+        if (sectionId.startsWith('spacer-')) {
+          return <div key={sectionId} style={{ height: 'calc(var(--section-margin) + 8px)' }} />;
+        }
+        if (customSections && customSections[sectionId]) {
+          return renderCustomSection(sectionId);
+        }
         const renderSection = renderers[sectionId];
-        return renderSection ? <React.Fragment key={sectionId}>{renderSection()}</React.Fragment> : null;
+        return renderSection ? renderSection() : null;
       })}
     </div>
   );

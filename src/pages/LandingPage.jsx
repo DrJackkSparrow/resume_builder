@@ -31,9 +31,33 @@ const LandingPage = () => {
   const [squishValue, setSquishValue] = useState(50);
 
   return (
-    <div className="min-h-screen bg-zinc-950 text-zinc-100 font-sans selection:bg-purple-500/30 selection:text-white">
+    <motion.div 
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: -20 }}
+      transition={{ duration: 0.4, ease: "easeOut" }}
+      className="min-h-screen bg-zinc-950 text-zinc-100 font-sans selection:bg-purple-500/30 selection:text-white"
+    >
       <Helmet>
-        <title>Unformat | Premium ATS Resume Builder</title>
+        <title>Premium AI Resume Builder | Create ATS Friendly Resume Free</title>
+        <meta name="description" content="Build your resume with Unformat, the ultimate free online resume builder. Our AI CV maker guarantees ATS-friendly resume templates to help you land your dream job." />
+        <meta name="keywords" content="resume builder, cv maker, free resume builder, build your resume, resume maker, create resume online free, online cv maker, ai resume builder, ats friendly resume template, ai cv maker" />
+        <link rel="canonical" href="https://unformat.com/" />
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "SoftwareApplication",
+            "name": "Unformat",
+            "operatingSystem": "All",
+            "applicationCategory": "BusinessApplication",
+            "offers": {
+              "@type": "Offer",
+              "price": "0",
+              "priceCurrency": "USD"
+            },
+            "description": "Premium AI resume builder providing strict ATS friendly resume templates like Jake's Resume and Harvard Resume."
+          })}
+        </script>
       </Helmet>
 
       {/* Interactive Hero Section */}
@@ -42,18 +66,20 @@ const LandingPage = () => {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: "easeOut" }}
-          className="text-5xl md:text-7xl font-bold tracking-tighter text-white mb-6 max-w-4xl leading-[1.1] relative z-10"
+          className="text-5xl md:text-7xl font-bold tracking-tighter text-white mb-8 max-w-4xl leading-[1.1] relative z-10"
         >
-          Build the Perfect <br className="hidden md:block"/> ATS-Friendly Resume.
+          Beat the filters. The <br className="hidden md:block"/> 
+          <span className="bg-zinc-800/80 border border-zinc-700 text-white px-4 py-1 rounded-lg mx-2 italic font-medium inline-block -rotate-1 shadow-xl">Harvard</span>
+          resume template, built for you.
         </motion.h1>
         
         <motion.p 
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
-          className="text-lg md:text-xl text-zinc-400 mb-10 max-w-2xl leading-relaxed relative z-10 font-medium"
+          className="text-lg md:text-xl text-zinc-400 mb-12 max-w-2xl leading-relaxed relative z-10 font-medium"
         >
-          Stop fighting with text boxes. Turn your raw data into flawless, high-performance PDFs instantly.
+          The ultimate <strong>free resume builder</strong>. Stop fighting with Word doc margins. We took the exact <em>Jake's</em> and <em>Harvard</em> ATS friendly resume templates and wrapped them in an intelligent JSON engine.
         </motion.p>
         
         <motion.div
@@ -78,41 +104,55 @@ const LandingPage = () => {
         >
           {/* Intense Purple Central Glow */}
           <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[300px] bg-purple-600/40 rounded-[100%] blur-[80px] pointer-events-none mix-blend-screen"></div>
-          
-          {/* Mockup Top Bar */}
-          <div className="h-12 border-b border-zinc-800/80 bg-zinc-900/50 flex items-center px-4 gap-2 relative z-10">
-             <div className="w-3 h-3 rounded-full bg-zinc-700"></div>
-             <div className="w-3 h-3 rounded-full bg-zinc-700"></div>
-             <div className="w-3 h-3 rounded-full bg-zinc-700"></div>
-          </div>
-          
-          {/* Mockup Content (Code left, Preview right) */}
-          <div className="flex h-full relative z-10">
-            {/* Left side: Code */}
-            <div className="w-1/3 border-r border-zinc-800/80 p-6 font-mono text-[11px] leading-loose text-zinc-400">
-               <span className="text-zinc-500">1</span> <span className="text-purple-400">"experience"</span>: [<br/>
-               <span className="text-zinc-500">2</span> &nbsp;&nbsp;{'{'}<br/>
-               <span className="text-zinc-500">3</span> &nbsp;&nbsp;&nbsp;&nbsp;<span className="text-purple-400">"company"</span>: <span className="text-emerald-400">"Tech Innovators"</span>,<br/>
-               <span className="text-zinc-500">4</span> &nbsp;&nbsp;&nbsp;&nbsp;<span className="text-purple-400">"role"</span>: <span className="text-emerald-400">"Senior Engineer"</span>,<br/>
-               <span className="text-zinc-500">5</span> &nbsp;&nbsp;&nbsp;&nbsp;<span className="text-purple-400">"bullets"</span>: [<br/>
-               <span className="text-zinc-500">6</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span className="text-emerald-400">"Architected microservices..."</span><br/>
-               <span className="text-zinc-500">7</span> &nbsp;&nbsp;&nbsp;&nbsp;]<br/>
-               <span className="text-zinc-500">8</span> &nbsp;&nbsp;{'}'}<br/>
-               <span className="text-zinc-500">9</span> ]
+          {/* Mac UI Window */}
+          <div className="rounded-xl overflow-hidden border border-zinc-800 bg-zinc-950 shadow-2xl relative z-10 w-full h-full flex flex-col">
+            <div className="h-10 bg-zinc-900 border-b border-zinc-800 flex items-center px-4 gap-2 shrink-0">
+              <div className="w-3 h-3 rounded-full bg-red-500/20 border border-red-500/50"></div>
+              <div className="w-3 h-3 rounded-full bg-yellow-500/20 border border-yellow-500/50"></div>
+              <div className="w-3 h-3 rounded-full bg-green-500/20 border border-green-500/50"></div>
             </div>
-            {/* Right side: PDF Preview */}
-            <div className="w-2/3 bg-zinc-800/30 p-8 flex justify-center items-start overflow-hidden">
-               <div className="w-[70%] h-full bg-white rounded-t shadow-2xl p-6 flex flex-col gap-4 relative">
-                  <div className="h-6 w-1/2 bg-zinc-900 rounded-sm"></div>
-                  <div className="h-2 w-1/4 bg-zinc-400 rounded-sm"></div>
-                  <div className="border-b-2 border-zinc-900 mt-2"></div>
-                  <div className="flex justify-between mt-2">
-                    <div className="h-3 w-1/3 bg-zinc-800 rounded-sm"></div>
-                    <div className="h-3 w-1/6 bg-zinc-300 rounded-sm"></div>
+            
+            <div className="flex-1 flex overflow-hidden">
+              {/* Code Editor Side */}
+              <div className="w-1/2 h-full bg-zinc-950 border-r border-zinc-800/50 p-6 font-mono text-[13px] overflow-hidden relative">
+                {/* Purple glow behind code */}
+                <div className="absolute top-0 left-0 w-full h-full bg-purple-900/10 pointer-events-none mix-blend-screen"></div>
+                
+                <div className="flex gap-4 relative z-10">
+                  <div className="text-right select-none text-zinc-600 flex flex-col font-medium">
+                    <span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span>
                   </div>
-                  <div className="h-2 w-full bg-zinc-200 rounded-sm"></div>
-                  <div className="h-2 w-5/6 bg-zinc-200 rounded-sm"></div>
-               </div>
+                  <div className="text-zinc-300 flex flex-col whitespace-pre">
+                    <span><span className="text-[#c678dd]">"experience"</span>: [</span>
+                    <span>  &#123;</span>
+                    <span>    <span className="text-[#c678dd]">"company"</span>: <span className="text-[#98c379]">"Tech Innovators"</span>,</span>
+                    <span>    <span className="text-[#c678dd]">"role"</span>: <span className="text-[#98c379]">"Senior Engineer"</span>,</span>
+                    <span>    <span className="text-[#c678dd]">"bullets"</span>: [</span>
+                    <span>      <span className="text-[#98c379]">"Built scalable microservices in Node"</span>,</span>
+                    <span>      <span className="text-[#98c379]">"Improved API response times by 40%"</span></span>
+                    <span>    ]</span>
+                    <span>  &#125;</span>
+                  </div>
+                </div>
+              </div>
+              
+              {/* Preview Side */}
+              <div className="w-1/2 h-full bg-zinc-100 p-8 flex items-center justify-center relative overflow-hidden">
+                <div className="absolute top-0 right-0 w-32 h-32 bg-blue-500/10 rounded-full blur-3xl mix-blend-multiply"></div>
+                
+                <div className="w-full h-full max-w-md bg-white shadow-xl shadow-zinc-200/50 flex flex-col p-8 gap-4 border border-zinc-200/50 transform rotate-1 hover:rotate-0 transition-transform duration-500">
+                  <div className="w-48 h-8 bg-zinc-800 rounded-sm"></div>
+                  <div className="w-32 h-2.5 bg-zinc-400 rounded-sm"></div>
+                  <div className="w-full h-px bg-zinc-300 my-2"></div>
+                  <div className="flex justify-between items-baseline mb-1">
+                    <div className="w-40 h-4 bg-zinc-800 rounded-sm"></div>
+                    <div className="w-24 h-3 bg-zinc-400 rounded-sm"></div>
+                  </div>
+                  <div className="w-full h-2 bg-zinc-300 rounded-sm mb-1"></div>
+                  <div className="w-5/6 h-2 bg-zinc-300 rounded-sm mb-1"></div>
+                  <div className="w-4/6 h-2 bg-zinc-300 rounded-sm"></div>
+                </div>
+              </div>
             </div>
           </div>
         </motion.div>
@@ -189,9 +229,8 @@ const LandingPage = () => {
               <div className="h-40 flex items-center justify-center relative mb-6 rounded-xl bg-zinc-950 border border-zinc-800/50 overflow-hidden">
                  <Smartphone className="w-12 h-12 text-blue-400 opacity-50 group-hover:opacity-100 transition-all duration-500 group-hover:scale-110" strokeWidth={1.5} />
               </div>
-              <h3 className="text-xl font-bold text-white mb-2">Live Dual-Pane Preview</h3>
-              <p className="text-sm text-zinc-400 leading-relaxed font-medium">
-                See your perfect PDF update in real-time as you type in the editor, ensuring visual perfection at every step.
+              <h3 className="text-xl font-bold text-white mb-2">AI CV Maker</h3>
+              <p className="text-sm text-zinc-400">Leverage our AI cv maker to refine bullet points and craft the perfect professional summary. See your PDF update in real-time as you type in the editor, ensuring visual perfection at every step.
               </p>
             </motion.div>
 
@@ -206,9 +245,8 @@ const LandingPage = () => {
               <div className="h-40 flex items-center justify-center relative mb-6 rounded-xl bg-zinc-950 border border-zinc-800/50 overflow-hidden">
                  <Download className="w-12 h-12 text-emerald-400 opacity-50 group-hover:opacity-100 transition-all duration-500 group-hover:-translate-y-2" strokeWidth={1.5} />
               </div>
-              <h3 className="text-xl font-bold text-white mb-2">1-Click PDF Export</h3>
-              <p className="text-sm text-zinc-400 leading-relaxed font-medium">
-                Download structurally perfect, universally readable PDFs that easily pass through corporate screening algorithms.
+              <h3 className="text-xl font-bold text-white mb-2">Build Your Resume Free</h3>
+              <p className="text-sm text-zinc-400">Export unlimited flawless PDFs using our free resume builder. No hidden paywalls. Create structurally perfect, universally readable PDFs that easily pass through corporate screening algorithms.
               </p>
             </motion.div>
 
@@ -278,7 +316,7 @@ const LandingPage = () => {
           </div>
         </div>
       </section>
-    </div>
+    </motion.div>
   );
 };
 

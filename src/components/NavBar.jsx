@@ -18,36 +18,39 @@ const NavBar = () => {
     
     setIsExporting(true);
     
-    // Format filename for default print dialog if supported, but typically handled by browser
-    const fullName = data.personalInfo.name || 'User';
-    const filename = `${fullName.replace(/\s+/g, '_')}_Resume.pdf`;
-    
-    const element = document.getElementById('resume-preview-container');
-    
-    if (element) {
-      const opt = {
-        margin:       0,
-        filename:     filename,
-        image:        { type: 'jpeg', quality: 0.98 },
-        html2canvas:  { scale: 2, useCORS: true, windowWidth: 816 }, // 8.5in * 96dpi = 816px
-        jsPDF:        { unit: 'in', format: 'letter', orientation: 'portrait' }
-      };
+    // Allow UI to update the loading state before blocking the thread
+    setTimeout(() => {
+      // Format filename for default print dialog if supported, but typically handled by browser
+      const fullName = data.personalInfo.name || 'User';
+      const filename = `${fullName.replace(/\s+/g, '_')}_Resume.pdf`;
+      
+      const element = document.getElementById('resume-preview-container');
+      
+      if (element) {
+        const opt = {
+          margin:       0,
+          filename:     filename,
+          image:        { type: 'jpeg', quality: 0.98 },
+          html2canvas:  { scale: 2, useCORS: true, windowWidth: 816 }, // 8.5in * 96dpi = 816px
+          jsPDF:        { unit: 'in', format: 'letter', orientation: 'portrait' }
+        };
 
-      html2pdf().set(opt).from(element).save().then(() => {
+        html2pdf().set(opt).from(element).save().then(() => {
+          setIsExporting(false);
+        }).catch(err => {
+          console.error('PDF Export Error:', err);
+          setIsExporting(false);
+        });
+      } else {
         setIsExporting(false);
-      }).catch(err => {
-        console.error('PDF Export Error:', err);
-        setIsExporting(false);
-      });
-    } else {
-      setIsExporting(false);
-    }
+      }
+    }, 100);
   };
 
   return (
     <nav className="h-16 w-full bg-zinc-950 border-b border-zinc-800 flex items-center justify-between px-8 z-50">
       <Link to="/" className="flex items-center gap-3 hover:opacity-80 transition-opacity cursor-pointer">
-        <img src="/unformat_logo.jpg" alt="Unformat Logo" className="w-8 h-8 rounded-md border border-zinc-800" />
+        <img src="/unformat_logo.jpg" alt="Unformat Logo" width="32" height="32" loading="eager" className="w-8 h-8 rounded-md border border-zinc-800" />
         <span className="text-white font-semibold tracking-tight text-lg">Unformat</span>
       </Link>
 
@@ -98,6 +101,13 @@ const NavBar = () => {
                   <p className="text-xs text-zinc-500 truncate">{currentUser.email}</p>
                 </div>
                 <div className="p-1">
+                  <Link 
+                    to="/dashboard"
+                    className="w-full flex items-center gap-2 px-3 py-2 text-sm text-zinc-400 hover:text-white hover:bg-zinc-800 rounded-md transition-colors"
+                  >
+                    <User size={14} />
+                    Dashboard
+                  </Link>
                   <button 
                     onClick={logout}
                     className="w-full flex items-center gap-2 px-3 py-2 text-sm text-zinc-400 hover:text-white hover:bg-zinc-800 rounded-md transition-colors"
