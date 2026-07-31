@@ -31,7 +31,7 @@ const LandingPage = () => {
   const [squishValue, setSquishValue] = useState(50);
 
   return (
-    <motion.div 
+    <motion.main 
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -20 }}
@@ -61,7 +61,7 @@ const LandingPage = () => {
       </Helmet>
 
       {/* Interactive Hero Section */}
-      <section ref={heroRef} className="pt-32 pb-48 flex flex-col items-center text-center relative overflow-hidden px-8">
+      <section ref={heroRef} className="pt-32 pb-48 flex flex-col items-center text-center relative overflow-hidden px-8" aria-label="Hero Section">
         <motion.h1 
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
@@ -79,7 +79,7 @@ const LandingPage = () => {
           transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
           className="text-lg md:text-xl text-zinc-400 mb-12 max-w-2xl leading-relaxed relative z-10 font-medium"
         >
-          The ultimate <strong>free resume builder</strong>. Stop fighting with Word doc margins. We took the exact <em>Jake's</em> and <em>Harvard</em> ATS friendly resume templates and wrapped them in an intelligent JSON engine.
+          The ultimate <strong>free resume builder</strong> and AI CV maker. Stop fighting with Word doc margins. We took the exact <em>Jake's</em> and <em>Harvard</em> ATS friendly resume templates and wrapped them in an intelligent JSON engine so you can generate professional resumes instantly.
         </motion.p>
         
         <motion.div
@@ -316,7 +316,7 @@ const LandingPage = () => {
           </div>
         </div>
       </section>
-    </motion.div>
+    </motion.main>
   );
 };
 

@@ -25,6 +25,8 @@ const Templates = () => {
         <meta name="description" content="Browse our strict, code-driven ATS resume templates. Generate a perfect Harvard Resume template or Jake's Resume template instantly with guaranteed parsing." />
         <meta name="keywords" content="Jake's Resume template, Harvard Resume template, ATS resume template, reverse chronological resume, software engineer resume" />
         <link rel="canonical" href="https://unformat.com/templates" />
+        <meta property="og:title" content="ATS Resume Templates | Harvard & Jake's Resume" />
+        <meta property="og:url" content="https://unformat.com/templates" />
       </Helmet>
       
       <div className="max-w-7xl mx-auto text-center">

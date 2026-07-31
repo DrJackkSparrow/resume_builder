@@ -88,9 +88,12 @@ const AppRoutes = () => {
 function App() {
   return (
     <BrowserRouter>
-      <Helmet defaultTitle="Unformat | ATS-Friendly Resume Builder" titleTemplate="%s | Unformat">
+      <Helmet defaultTitle="Unformat | Free ATS-Friendly Resume Builder" titleTemplate="%s | Unformat">
+        <html lang="en" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta name="theme-color" content="#09090b" />
+        <meta name="description" content="Build the perfect ATS-friendly resume for free. Unformat is an intelligent JSON-powered resume builder featuring exact Jake's and Harvard resume templates." />
+        <link rel="canonical" href="https://unformat.com" />
       </Helmet>
       <AppRoutes />
     </BrowserRouter>
