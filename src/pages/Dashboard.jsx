@@ -4,7 +4,6 @@ import { useUser } from '../contexts/UserContext';
 import { useResumeStore } from '../store/useResumeStore';
 import { Helmet } from 'react-helmet-async';
 import { FileText, Download, Edit2, LogOut, Loader2, ArrowRight } from 'lucide-react';
-import html2pdf from 'html2pdf.js';
 import JakeTemplate from '../components/templates/JakeTemplate';
 import HarvardTemplate from '../components/templates/HarvardTemplate';
 import ModernSidebarTemplate from '../components/templates/ModernSidebarTemplate';

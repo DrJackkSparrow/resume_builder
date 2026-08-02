@@ -3,7 +3,6 @@ import { useResumeStore } from '../store/useResumeStore';
 import { useUser } from '../contexts/UserContext';
 import { Download, LogOut, User, Loader2 } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import html2pdf from 'html2pdf.js';
 
 import { useReactToPrint } from 'react-to-print';
 
