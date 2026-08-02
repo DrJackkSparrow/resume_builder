@@ -1,27 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
+            http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
+  
+  <!-- Primary Landing Page - Highest Priority, crawls often -->
   <url>
     <loc>https://unformat.com/</loc>
-    <lastmod>2026-07-24</lastmod>
-    <changefreq>weekly</changefreq>
+    <lastmod>2026-08-02T00:00:00+00:00</lastmod>
+    <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
+  
+  <!-- Templates Showcase - High Priority, for visual ranking -->
   <url>
     <loc>https://unformat.com/templates</loc>
-    <lastmod>2026-07-24</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <lastmod>2026-08-02T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
   </url>
+  
+  <!-- Legal Pages - Low Priority, crawls rarely -->
   <url>
     <loc>https://unformat.com/privacy</loc>
-    <lastmod>2026-07-24</lastmod>
+    <lastmod>2026-08-02T00:00:00+00:00</lastmod>
     <changefreq>yearly</changefreq>
-    <priority>0.5</priority>
+    <priority>0.3</priority>
   </url>
   <url>
     <loc>https://unformat.com/terms</loc>
-    <lastmod>2026-07-24</lastmod>
+    <lastmod>2026-08-02T00:00:00+00:00</lastmod>
     <changefreq>yearly</changefreq>
-    <priority>0.5</priority>
+    <priority>0.3</priority>
   </url>
+  
 </urlset>
