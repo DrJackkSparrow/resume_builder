@@ -9,6 +9,8 @@ import JakeTemplate from '../components/templates/JakeTemplate';
 import HarvardTemplate from '../components/templates/HarvardTemplate';
 import ModernSidebarTemplate from '../components/templates/ModernSidebarTemplate';
 
+import { useReactToPrint } from 'react-to-print';
+
 const Dashboard = () => {
   const { currentUser, logout, openPaywall, incrementDownloadCount } = useUser();
   const { data } = useResumeStore();
@@ -20,6 +22,23 @@ const Dashboard = () => {
       navigate('/');
     }
   }, [currentUser, navigate]);
+
+  const handlePrint = useReactToPrint({
+    content: () => document.getElementById('dashboard-resume-export-container'),
+    documentTitle: `${(data.personalInfo.name || 'User').replace(/\s+/g, '_')}_Resume`,
+    onBeforeGetContent: () => {
+      setIsExporting(true);
+      return Promise.resolve();
+    },
+    onAfterPrint: () => {
+      setIsExporting(false);
+      incrementDownloadCount();
+    },
+    onPrintError: (error) => {
+      console.error('Print Error:', error);
+      setIsExporting(false);
+    }
+  });
 
   if (!currentUser) return null;
 
@@ -35,47 +54,7 @@ const Dashboard = () => {
       }
     }
 
-    setIsExporting(true);
-    
-    setTimeout(() => {
-      const fullName = data.personalInfo.name || 'User';
-      const filename = `${fullName.replace(/\s+/g, '_')}_Resume.pdf`;
-      
-      // We render a hidden preview container specifically for html2pdf
-      const element = document.getElementById('dashboard-resume-export-container');
-      
-      if (element) {
-        // Temporarily remove hidden class to allow html2canvas to render
-        element.classList.remove('hidden');
-        // Set absolute positioning so it doesn't disrupt flow during render
-        element.style.position = 'absolute';
-        element.style.top = '-9999px';
-        
-        const opt = {
-          margin:       0,
-          filename:     filename,
-          image:        { type: 'jpeg', quality: 0.98 },
-          html2canvas:  { scale: 2, useCORS: true, windowWidth: 816 },
-          jsPDF:        { unit: 'in', format: 'letter', orientation: 'portrait' }
-        };
-
-        html2pdf().set(opt).from(element).save().then(() => {
-          element.classList.add('hidden');
-          element.style.position = '';
-          element.style.top = '';
-          setIsExporting(false);
-          incrementDownloadCount();
-        }).catch(err => {
-          console.error('PDF Export Error:', err);
-          element.classList.add('hidden');
-          element.style.position = '';
-          element.style.top = '';
-          setIsExporting(false);
-        });
-      } else {
-        setIsExporting(false);
-      }
-    }, 100);
+    handlePrint();
   };
 
   const getTemplateName = () => {
@@ -195,7 +174,7 @@ const Dashboard = () => {
       </main>
 
       {/* Hidden Render Container for PDF Export */}
-      <div id="dashboard-resume-export-container" className="hidden">
+      <div id="dashboard-resume-export-container" className="hidden print:block">
         <div className="bg-white" style={{ width: '8.5in' }}>
           {data.activeTemplate === 'harvard' && <HarvardTemplate data={data} />}
           {data.activeTemplate === 'jake' && <JakeTemplate data={data} />}

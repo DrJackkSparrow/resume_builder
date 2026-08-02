@@ -8,3 +8,26 @@
     @apply bg-slate-50 text-slate-900 m-0 p-0 font-sans;
   }
 }
+
+@media print {
+  @page {
+    margin: 0;
+    size: letter portrait;
+  }
+  
+  html, body {
+    margin: 0 !important;
+    padding: 0 !important;
+    background-color: white !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  /* Ensure resume container takes full width when printing */
+  #resume-preview-container, #dashboard-resume-export-container {
+    width: 8.5in !important;
+    box-shadow: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+}

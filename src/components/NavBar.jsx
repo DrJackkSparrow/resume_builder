@@ -5,10 +5,29 @@ import { Download, LogOut, User, Loader2 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import html2pdf from 'html2pdf.js';
 
+import { useReactToPrint } from 'react-to-print';
+
 const NavBar = () => {
   const { data, setActiveTemplate } = useResumeStore();
   const { currentUser, openAuthModal, logout, openPaywall, incrementDownloadCount } = useUser();
   const [isExporting, setIsExporting] = useState(false);
+
+  const handlePrint = useReactToPrint({
+    content: () => document.getElementById('resume-preview-container'),
+    documentTitle: `${(data.personalInfo.name || 'User').replace(/\s+/g, '_')}_Resume`,
+    onBeforeGetContent: () => {
+      setIsExporting(true);
+      return Promise.resolve();
+    },
+    onAfterPrint: () => {
+      setIsExporting(false);
+      incrementDownloadCount();
+    },
+    onPrintError: (error) => {
+      console.error('Print Error:', error);
+      setIsExporting(false);
+    }
+  });
 
   const handleDownload = () => {
     if (!currentUser) {
@@ -27,36 +46,8 @@ const NavBar = () => {
       }
     }
     
-    setIsExporting(true);
-    
-    // Allow UI to update the loading state before blocking the thread
-    setTimeout(() => {
-      // Format filename for default print dialog if supported, but typically handled by browser
-      const fullName = data.personalInfo.name || 'User';
-      const filename = `${fullName.replace(/\s+/g, '_')}_Resume.pdf`;
-      
-      const element = document.getElementById('resume-preview-container');
-      
-      if (element) {
-        const opt = {
-          margin:       0,
-          filename:     filename,
-          image:        { type: 'jpeg', quality: 0.98 },
-          html2canvas:  { scale: 2, useCORS: true, windowWidth: 816 }, // 8.5in * 96dpi = 816px
-          jsPDF:        { unit: 'in', format: 'letter', orientation: 'portrait' }
-        };
-
-        html2pdf().set(opt).from(element).save().then(() => {
-          setIsExporting(false);
-          incrementDownloadCount();
-        }).catch(err => {
-          console.error('PDF Export Error:', err);
-          setIsExporting(false);
-        });
-      } else {
-        setIsExporting(false);
-      }
-    }, 100);
+    // Trigger native browser print which react-to-print manages
+    handlePrint();
   };
 
   return (
