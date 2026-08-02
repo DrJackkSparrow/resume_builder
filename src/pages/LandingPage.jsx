@@ -44,19 +44,59 @@ const LandingPage = () => {
         <meta name="keywords" content="resume builder, cv maker, free resume builder, build your resume, resume maker, create resume online free, online cv maker, ai resume builder, ats friendly resume template, ai cv maker" />
         <link rel="canonical" href="https://unformat.com/" />
         <script type="application/ld+json">
-          {JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "SoftwareApplication",
-            "name": "Unformat",
-            "operatingSystem": "All",
-            "applicationCategory": "BusinessApplication",
-            "offers": {
-              "@type": "Offer",
-              "price": "0",
-              "priceCurrency": "USD"
+          {JSON.stringify([
+            {
+              "@context": "https://schema.org",
+              "@type": "SoftwareApplication",
+              "name": "Unformat",
+              "operatingSystem": "All",
+              "applicationCategory": "BusinessApplication",
+              "offers": {
+                "@type": "Offer",
+                "price": "0",
+                "priceCurrency": "USD"
+              },
+              "description": "Premium AI resume builder providing strict ATS friendly resume templates like Jake's Resume and Harvard Resume."
             },
-            "description": "Premium AI resume builder providing strict ATS friendly resume templates like Jake's Resume and Harvard Resume."
-          })}
+            {
+              "@context": "https://schema.org",
+              "@type": "FAQPage",
+              "mainEntity": [
+                {
+                  "@type": "Question",
+                  "name": "Is it actually free?",
+                  "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Yes. The Free Forever tier allows you to build your resume using standard ATS templates and download up to 2 PDFs per month without watermarks. No credit card required."
+                  }
+                },
+                {
+                  "@type": "Question",
+                  "name": "Does the 7-Day Pass auto-renew?",
+                  "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Absolutely not. We hate surprise charges. The 7-Day Pass is a one-time payment of ₹99. After 7 days, your account simply reverts to the Free Forever tier. Your data is perfectly safe."
+                  }
+                },
+                {
+                  "@type": "Question",
+                  "name": "Will this pass ATS scanners?",
+                  "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Yes. Our templates (especially Jake's and Harvard) are the industry standard for passing Applicant Tracking Systems. They use standard fonts, pure text structure, and avoid tables or graphics that confuse parsers."
+                  }
+                },
+                {
+                  "@type": "Question",
+                  "name": "Can I import my LinkedIn profile?",
+                  "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Currently, we recommend copy-pasting your content to ensure the highest quality formatting. However, our Pro tier's 'AI Auto-Tailor' feature allows you to paste a Job Description and have your bullets instantly optimized."
+                  }
+                }
+              ]
+            }
+          ])}
         </script>
       </Helmet>
 
@@ -93,7 +133,7 @@ const LandingPage = () => {
             className="group inline-flex items-center gap-2 bg-white text-zinc-950 px-8 py-4 rounded-full text-base font-bold transition-all duration-300 hover:scale-105 hover:shadow-[0_0_20px_rgba(255,255,255,0.3)]"
           >
             Go to Editor
-            <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 12h14m-7-7l7 7-7 7" /></svg>
+            <svg aria-hidden="true" className="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 12h14m-7-7l7 7-7 7" /></svg>
           </Link>
         </motion.div>
 
@@ -187,6 +227,7 @@ const LandingPage = () => {
                       value={squishValue} 
                       onChange={(e) => setSquishValue(Number(e.target.value))}
                       className="w-full h-1 bg-zinc-800 rounded-full appearance-none cursor-pointer accent-purple-500"
+                      aria-label="Adjust resume spacing"
                     />
                     <div className="mt-4 border-l-2 border-purple-500 pl-4 transition-transform duration-100 origin-top" style={{ transform: `scaleY(${0.5 + squishValue/200})` }}>
                        <div className="h-2 w-full bg-zinc-700 rounded mb-2"></div>
@@ -336,10 +377,10 @@ const LandingPage = () => {
                 <span className="text-4xl font-black text-white">₹0</span>
               </div>
               <ul className="space-y-4 mb-8 text-sm text-zinc-300 font-medium">
-                <li className="flex items-start gap-3"><svg className="w-5 h-5 text-emerald-500 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg> 1 active resume saved</li>
-                <li className="flex items-start gap-3"><svg className="w-5 h-5 text-emerald-500 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg> Access to basic ATS templates</li>
-                <li className="flex items-start gap-3"><svg className="w-5 h-5 text-emerald-500 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg> 2 free PDF downloads/month</li>
-                <li className="flex items-start gap-3 text-zinc-500"><svg className="w-5 h-5 text-zinc-700 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" /></svg> Preview AI features (No export)</li>
+                <li className="flex items-start gap-3"><svg aria-hidden="true" className="w-5 h-5 text-emerald-500 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg> 1 active resume saved</li>
+                <li className="flex items-start gap-3"><svg aria-hidden="true" className="w-5 h-5 text-emerald-500 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg> Access to basic ATS templates</li>
+                <li className="flex items-start gap-3"><svg aria-hidden="true" className="w-5 h-5 text-emerald-500 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg> 2 free PDF downloads/month</li>
+                <li className="flex items-start gap-3 text-zinc-500"><svg aria-hidden="true" className="w-5 h-5 text-zinc-700 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" /></svg> Preview AI features (No export)</li>
               </ul>
               <Link to="/editor" className="w-full py-3 px-4 bg-zinc-800 text-white rounded-lg font-bold hover:bg-zinc-700 transition-colors text-center mt-auto">
                 Get Started
@@ -358,10 +399,10 @@ const LandingPage = () => {
                 <span className="text-zinc-500 text-sm">/ 7 days</span>
               </div>
               <ul className="space-y-4 mb-8 text-sm text-zinc-300 font-medium">
-                <li className="flex items-start gap-3"><svg className="w-5 h-5 text-purple-400 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg> Unlimited PDF downloads</li>
-                <li className="flex items-start gap-3"><svg className="w-5 h-5 text-purple-400 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg> Premium Sidebar template</li>
-                <li className="flex items-start gap-3"><svg className="w-5 h-5 text-purple-400 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg> Unlimited AI Bullet Enhancer</li>
-                <li className="flex items-start gap-3"><svg className="w-5 h-5 text-purple-400 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg> No subscriptions, no traps</li>
+                <li className="flex items-start gap-3"><svg aria-hidden="true" className="w-5 h-5 text-purple-400 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg> Unlimited PDF downloads</li>
+                <li className="flex items-start gap-3"><svg aria-hidden="true" className="w-5 h-5 text-purple-400 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg> Premium Sidebar template</li>
+                <li className="flex items-start gap-3"><svg aria-hidden="true" className="w-5 h-5 text-purple-400 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg> Unlimited AI Bullet Enhancer</li>
+                <li className="flex items-start gap-3"><svg aria-hidden="true" className="w-5 h-5 text-purple-400 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg> No subscriptions, no traps</li>
               </ul>
               <button className="w-full py-3 px-4 bg-purple-600 text-white rounded-lg font-bold hover:bg-purple-500 transition-colors text-center mt-auto shadow-lg shadow-purple-500/20">
                 Buy Pass (~$2)
@@ -377,10 +418,10 @@ const LandingPage = () => {
                 <span className="text-zinc-500 text-sm">/ month</span>
               </div>
               <ul className="space-y-4 mb-8 text-sm text-zinc-300 font-medium">
-                <li className="flex items-start gap-3"><svg className="w-5 h-5 text-emerald-500 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg> Unlimited resumes & templates</li>
-                <li className="flex items-start gap-3"><svg className="w-5 h-5 text-emerald-500 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg> All AI features included</li>
-                <li className="flex items-start gap-3"><svg className="w-5 h-5 text-emerald-500 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg> <strong className="text-white">AI Auto-Tailor</strong> (Paste JD)</li>
-                <li className="flex items-start gap-3"><svg className="w-5 h-5 text-emerald-500 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg> Cancel anytime</li>
+                <li className="flex items-start gap-3"><svg aria-hidden="true" className="w-5 h-5 text-emerald-500 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg> Unlimited resumes & templates</li>
+                <li className="flex items-start gap-3"><svg aria-hidden="true" className="w-5 h-5 text-emerald-500 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg> All AI features included</li>
+                <li className="flex items-start gap-3"><svg aria-hidden="true" className="w-5 h-5 text-emerald-500 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg> <strong className="text-white">AI Auto-Tailor</strong> (Paste JD)</li>
+                <li className="flex items-start gap-3"><svg aria-hidden="true" className="w-5 h-5 text-emerald-500 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg> Cancel anytime</li>
               </ul>
               <button className="w-full py-3 px-4 bg-white text-zinc-950 rounded-lg font-bold hover:bg-zinc-200 transition-colors text-center mt-auto">
                 Subscribe (~$5)
@@ -396,10 +437,10 @@ const LandingPage = () => {
                 <span className="text-zinc-500 text-sm">one-time</span>
               </div>
               <ul className="space-y-4 mb-8 text-sm text-zinc-300 font-medium">
-                <li className="flex items-start gap-3"><svg className="w-5 h-5 text-amber-500 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg> Permanent Pro access</li>
-                <li className="flex items-start gap-3"><svg className="w-5 h-5 text-amber-500 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg> No recurring charges</li>
-                <li className="flex items-start gap-3"><svg className="w-5 h-5 text-amber-500 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg> Early access to new templates</li>
-                <li className="flex items-start gap-3"><svg className="w-5 h-5 text-amber-500 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg> Support solo developers</li>
+                <li className="flex items-start gap-3"><svg aria-hidden="true" className="w-5 h-5 text-amber-500 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg> Permanent Pro access</li>
+                <li className="flex items-start gap-3"><svg aria-hidden="true" className="w-5 h-5 text-amber-500 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg> No recurring charges</li>
+                <li className="flex items-start gap-3"><svg aria-hidden="true" className="w-5 h-5 text-amber-500 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg> Early access to new templates</li>
+                <li className="flex items-start gap-3"><svg aria-hidden="true" className="w-5 h-5 text-amber-500 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg> Support solo developers</li>
               </ul>
               <button className="w-full py-3 px-4 bg-zinc-800 text-white rounded-lg font-bold hover:bg-zinc-700 transition-colors text-center mt-auto border border-zinc-700">
                 Get Lifetime (~$25)

@@ -23,10 +23,30 @@ const Templates = () => {
       <Helmet>
         <title>ATS Resume Templates | Harvard & Jake's Resume | Unformat</title>
         <meta name="description" content="Browse our strict, code-driven ATS resume templates. Generate a perfect Harvard Resume template or Jake's Resume template instantly with guaranteed parsing." />
-        <meta name="keywords" content="Jake's Resume template, Harvard Resume template, ATS resume template, reverse chronological resume, software engineer resume" />
+        <meta name="keywords" content="Jake's Resume template, Harvard Resume template, ATS resume template, reverse chronological resume, software engineer resume, free ats template" />
         <link rel="canonical" href="https://unformat.com/templates" />
         <meta property="og:title" content="ATS Resume Templates | Harvard & Jake's Resume" />
         <meta property="og:url" content="https://unformat.com/templates" />
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "ItemList",
+            "itemListElement": [
+              {
+                "@type": "ListItem",
+                "position": 1,
+                "url": "https://unformat.com/templates#harvard",
+                "name": "Harvard Resume Template"
+              },
+              {
+                "@type": "ListItem",
+                "position": 2,
+                "url": "https://unformat.com/templates#jake",
+                "name": "Jake's Resume Template"
+              }
+            ]
+          })}
+        </script>
       </Helmet>
       
       <div className="max-w-7xl mx-auto text-center">
