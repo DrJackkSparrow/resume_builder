@@ -407,6 +407,57 @@ const LandingPage = () => {
             </div>
             
           </div>
+      {/* FAQ Section */}
+      <section className="px-8 lg:px-24 py-32 bg-zinc-950 border-t border-zinc-900">
+        <div className="max-w-4xl mx-auto">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-5xl font-bold text-white mb-6 tracking-tight">Frequently Asked Questions</h2>
+            <p className="text-zinc-400 text-lg">Everything you need to know about the product and billing.</p>
+          </div>
+          
+          <div className="space-y-6">
+            <div className="bg-zinc-900/40 border border-zinc-800 rounded-2xl p-8 hover:bg-zinc-900/80 transition-colors">
+              <h3 className="text-xl font-bold text-white mb-3">Is it actually free?</h3>
+              <p className="text-zinc-400 leading-relaxed">Yes. The Free Forever tier allows you to build your resume using standard ATS templates and download up to 2 PDFs per month without watermarks. No credit card required.</p>
+            </div>
+            
+            <div className="bg-zinc-900/40 border border-zinc-800 rounded-2xl p-8 hover:bg-zinc-900/80 transition-colors">
+              <h3 className="text-xl font-bold text-white mb-3">Does the 7-Day Pass auto-renew?</h3>
+              <p className="text-zinc-400 leading-relaxed">Absolutely not. We hate surprise charges. The 7-Day Pass is a one-time payment of ₹99. After 7 days, your account simply reverts to the Free Forever tier. Your data is perfectly safe.</p>
+            </div>
+            
+            <div className="bg-zinc-900/40 border border-zinc-800 rounded-2xl p-8 hover:bg-zinc-900/80 transition-colors">
+              <h3 className="text-xl font-bold text-white mb-3">Will this pass ATS scanners?</h3>
+              <p className="text-zinc-400 leading-relaxed">Yes. Our templates (especially Jake's and Harvard) are the industry standard for passing Applicant Tracking Systems. They use standard fonts, pure text structure, and avoid tables or graphics that confuse parsers.</p>
+            </div>
+            
+            <div className="bg-zinc-900/40 border border-zinc-800 rounded-2xl p-8 hover:bg-zinc-900/80 transition-colors">
+              <h3 className="text-xl font-bold text-white mb-3">Can I import my LinkedIn profile?</h3>
+              <p className="text-zinc-400 leading-relaxed">Currently, we recommend copy-pasting your content to ensure the highest quality formatting. However, our Pro tier's "AI Auto-Tailor" feature allows you to paste a Job Description and have your bullets instantly optimized.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Final CTA Section */}
+      <section className="px-8 lg:px-24 py-32 relative overflow-hidden bg-zinc-950 border-t border-zinc-900 flex items-center justify-center">
+        {/* Abstract Background Glows */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-3xl aspect-[2/1] bg-gradient-to-r from-purple-900/30 via-emerald-900/30 to-blue-900/30 rounded-full blur-[100px] pointer-events-none mix-blend-screen"></div>
+        
+        <div className="relative z-10 max-w-4xl mx-auto text-center">
+          <h2 className="text-4xl md:text-6xl font-black text-white mb-8 tracking-tighter">Ready to land the interview?</h2>
+          <p className="text-xl text-zinc-400 mb-12 max-w-2xl mx-auto">
+            Stop fighting with formatting. Start building a resume that actually gets past the robots and into the hands of a hiring manager.
+          </p>
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+            <Link 
+              to="/editor" 
+              className="w-full sm:w-auto px-10 py-5 bg-white text-zinc-950 rounded-xl font-bold text-lg hover:bg-zinc-200 hover:scale-105 transition-all shadow-[0_0_40px_rgba(255,255,255,0.2)]"
+            >
+              Build Your Resume Now
+            </Link>
+            <span className="text-sm font-medium text-zinc-500 hidden sm:block">No credit card required.</span>
+          </div>
         </div>
       </section>
     </motion.main>
