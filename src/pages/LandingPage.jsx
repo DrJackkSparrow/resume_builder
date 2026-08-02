@@ -448,6 +448,9 @@ const LandingPage = () => {
             </div>
             
           </div>
+        </div>
+      </section>
+
       {/* FAQ Section */}
       <section className="px-8 lg:px-24 py-32 bg-zinc-950 border-t border-zinc-900">
         <div className="max-w-4xl mx-auto">
