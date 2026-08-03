@@ -22,22 +22,15 @@ const Dashboard = () => {
     }
   }, [currentUser, navigate]);
 
-  const handlePrint = useReactToPrint({
-    content: () => document.getElementById('dashboard-resume-export-container'),
-    documentTitle: `${(data.personalInfo.name || 'User').replace(/\s+/g, '_')}_Resume`,
-    onBeforeGetContent: () => {
-      setIsExporting(true);
-      return Promise.resolve();
-    },
-    onAfterPrint: () => {
+  useEffect(() => {
+    const handleAfterPrint = () => {
       setIsExporting(false);
       incrementDownloadCount();
-    },
-    onPrintError: (error) => {
-      console.error('Print Error:', error);
-      setIsExporting(false);
-    }
-  });
+    };
+    
+    window.addEventListener('afterprint', handleAfterPrint);
+    return () => window.removeEventListener('afterprint', handleAfterPrint);
+  }, [incrementDownloadCount]);
 
   if (!currentUser) return null;
 
@@ -52,8 +45,12 @@ const Dashboard = () => {
         return;
       }
     }
-
-    handlePrint();
+    setIsExporting(true);
+    setTimeout(() => {
+      document.title = `${(data.personalInfo.name || 'User').replace(/\s+/g, '_')}_Resume`;
+      window.print();
+      document.title = 'Dashboard | Unformat';
+    }, 100);
   };
 
   const getTemplateName = () => {

@@ -1,32 +1,23 @@
-import React, { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useResumeStore } from '../store/useResumeStore';
 import { useUser } from '../contexts/UserContext';
 import { Download, LogOut, User, Loader2 } from 'lucide-react';
 import { Link } from 'react-router-dom';
-
-import { useReactToPrint } from 'react-to-print';
 
 const NavBar = () => {
   const { data, setActiveTemplate } = useResumeStore();
   const { currentUser, openAuthModal, logout, openPaywall, incrementDownloadCount } = useUser();
   const [isExporting, setIsExporting] = useState(false);
 
-  const handlePrint = useReactToPrint({
-    content: () => document.getElementById('resume-preview-container'),
-    documentTitle: `${(data.personalInfo.name || 'User').replace(/\s+/g, '_')}_Resume`,
-    onBeforeGetContent: () => {
-      setIsExporting(true);
-      return Promise.resolve();
-    },
-    onAfterPrint: () => {
+  useEffect(() => {
+    const handleAfterPrint = () => {
       setIsExporting(false);
       incrementDownloadCount();
-    },
-    onPrintError: (error) => {
-      console.error('Print Error:', error);
-      setIsExporting(false);
-    }
-  });
+    };
+    
+    window.addEventListener('afterprint', handleAfterPrint);
+    return () => window.removeEventListener('afterprint', handleAfterPrint);
+  }, [incrementDownloadCount]);
 
   const handleDownload = () => {
     if (!currentUser) {
@@ -44,9 +35,13 @@ const NavBar = () => {
         return;
       }
     }
-    
-    // Trigger native browser print which react-to-print manages
-    handlePrint();
+    // Trigger native browser print directly
+    setIsExporting(true);
+    setTimeout(() => {
+      document.title = `${(data.personalInfo.name || 'User').replace(/\s+/g, '_')}_Resume`;
+      window.print();
+      document.title = 'Unformat | Free ATS-Friendly Resume Builder';
+    }, 100);
   };
 
   return (
