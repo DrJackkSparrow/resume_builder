@@ -23,22 +23,5 @@
     print-color-adjust: exact;
   }
 
-  body * {
-    visibility: hidden;
-  }
-
-  #resume-preview-container, #resume-preview-container *,
-  #dashboard-resume-export-container, #dashboard-resume-export-container * {
-    visibility: visible;
-  }
-
-  #resume-preview-container, #dashboard-resume-export-container {
-    position: absolute !important;
-    left: 0 !important;
-    top: 0 !important;
-    width: 8.5in !important;
-    box-shadow: none !important;
-    margin: 0 !important;
-    padding: 0 !important;
-  }
+  /* Ensure basic page resets */
 }

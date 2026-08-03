@@ -39,19 +39,21 @@ const EditorLayout = () => {
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       transition={{ duration: 0.3 }}
-      className="flex flex-col h-screen w-full overflow-hidden bg-white font-sans text-slate-900"
+      className="flex flex-col h-screen w-full overflow-hidden bg-white font-sans text-slate-900 print:block print:h-auto print:overflow-visible print:bg-transparent"
     >
-      <NavBar />
+      <div className="print:hidden">
+        <NavBar />
+      </div>
       <AuthModal />
       
-      <div className="flex h-[calc(100vh-64px)] w-full relative">
-        <div className="w-1/2 h-full relative z-10">
+      <div className="flex h-[calc(100vh-64px)] w-full relative print:block print:h-auto print:static">
+        <div className="w-1/2 h-full relative z-10 print:hidden">
           <EditorPane />
         </div>
         
-        <div className="w-1/2 h-full bg-slate-100 border-l border-slate-200 relative">
-          <div className="absolute top-0 right-0 w-64 h-64 bg-blue-100 rounded-full mix-blend-multiply filter blur-3xl opacity-50 pointer-events-none transform translate-x-1/2 -translate-y-1/2"></div>
-          <div className="absolute bottom-0 left-0 w-96 h-96 bg-indigo-100 rounded-full mix-blend-multiply filter blur-3xl opacity-50 pointer-events-none transform -translate-x-1/2 translate-y-1/2"></div>
+        <div className="w-1/2 h-full bg-slate-100 border-l border-slate-200 relative print:w-full print:static print:border-none print:bg-transparent">
+          <div className="absolute top-0 right-0 w-64 h-64 bg-blue-100 rounded-full mix-blend-multiply filter blur-3xl opacity-50 pointer-events-none transform translate-x-1/2 -translate-y-1/2 print:hidden"></div>
+          <div className="absolute bottom-0 left-0 w-96 h-96 bg-indigo-100 rounded-full mix-blend-multiply filter blur-3xl opacity-50 pointer-events-none transform -translate-x-1/2 translate-y-1/2 print:hidden"></div>
           
           <PreviewPane />
         </div>

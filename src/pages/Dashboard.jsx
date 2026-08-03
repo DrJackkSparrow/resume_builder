@@ -63,13 +63,13 @@ const Dashboard = () => {
   };
 
   return (
-    <div className="min-h-screen bg-zinc-950 text-zinc-100 flex flex-col font-sans">
+    <div className="min-h-screen bg-zinc-950 text-zinc-100 flex flex-col font-sans print:block print:bg-transparent print:min-h-0">
       <Helmet>
         <title>Dashboard | Unformat</title>
         <meta name="robots" content="noindex, nofollow" />
       </Helmet>
 
-      <main className="flex-grow max-w-5xl w-full mx-auto px-8 py-16">
+      <main className="flex-grow max-w-5xl w-full mx-auto px-8 py-16 print:hidden">
         {/* Profile Header */}
         <div className="flex flex-col md:flex-row items-start md:items-center justify-between mb-12 gap-6">
           <div className="flex items-center gap-6">
@@ -170,8 +170,8 @@ const Dashboard = () => {
       </main>
 
       {/* Hidden Render Container for PDF Export */}
-      <div id="dashboard-resume-export-container" className="hidden print:block">
-        <div className="bg-white" style={{ width: '8.5in' }}>
+      <div id="dashboard-resume-export-container" className="hidden print:flex print:justify-center print:w-full print:m-0 print:p-0">
+        <div className="bg-white print:w-[8.5in] print:mx-auto">
           {data.activeTemplate === 'harvard' && <HarvardTemplate data={data} />}
           {data.activeTemplate === 'jake' && <JakeTemplate data={data} />}
           {data.activeTemplate === 'modern' && <ModernSidebarTemplate data={data} />}
