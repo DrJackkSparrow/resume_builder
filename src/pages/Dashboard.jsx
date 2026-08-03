@@ -57,7 +57,7 @@ const Dashboard = () => {
     switch (data.activeTemplate) {
       case 'harvard': return 'Harvard Resume';
       case 'jake': return "Jake's Resume";
-      case 'modern': return 'Modern Sidebar';
+      case 'modern': return 'Modern Sidebar (PRO)';
       default: return 'Active Resume';
     }
   };
